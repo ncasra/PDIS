@@ -12,5 +12,11 @@ namespace PDIS.Model
         public double TotalCost;
         public double TotalTime;
         public int RouteId;
+        public RouteInfo()
+        {
+            RouteStops = new List<string>();
+            TotalCost = 0;
+            TotalTime = 0;
+        }
     }
 }

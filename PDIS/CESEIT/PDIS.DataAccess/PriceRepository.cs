@@ -37,7 +37,7 @@ namespace PDIS.DataAccess
             var segResult = segments.First();
 
             var dw = (decimal)weight;
-            var p = from price in prices.Where(pr => pr.ValidFrom > date && pr.WeightFrom <= dw && pr.WeightTo >= dw)
+            var p = from price in prices.Where(pr => pr.ValidFrom <= date && pr.WeightFrom <= dw && pr.WeightTo >= dw)
                     select price;
             var priceResult = p.First();
 
