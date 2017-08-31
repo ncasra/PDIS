@@ -10,6 +10,7 @@
         <EntityTypeShape EntityType="Model.CargoType" Width="1.5" PointX="6" PointY="0.875" />
         <EntityTypeShape EntityType="Model.Supplier" Width="1.5" PointX="8" PointY="1.875" />
         <EntityTypeShape EntityType="Model.RouteData" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="Model.Counter" Width="1.5" PointX="3.375" PointY="4.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
