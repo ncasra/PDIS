@@ -9,9 +9,9 @@ namespace CESEIT
     public class DistanceProvider
     {
         //Cache already requested edges
-        public double Distance(string source, string target, EdgeType edgetype, double weight)
+        public double Distance(string source, string target, EdgeType edgetype, double weight, (double, double) metric)
         {
-            double dist = 10;
+            double dist = 0;
             switch (edgetype)
             {
                 case EdgeType.Ship:

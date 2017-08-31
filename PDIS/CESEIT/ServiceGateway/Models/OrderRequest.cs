@@ -7,6 +7,6 @@ namespace ServiceGateway.Models
 {
     public class OrderRequest
     {
-        public int OrderId;
+        public string OrderId;
     }
 }

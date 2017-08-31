@@ -1,7 +1,43 @@
-﻿<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+﻿<div class="row">
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label for="inputFrom">Fra:</label>
+            <select class="form-control" id="inputFrom">
+                <option>Sierra Leone</option>
+                <option>Noget andet</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="inputTo">Til:</label>
+            <select class="form-control" id="inputTo">
+                <option>Sierra Leone</option>
+                <option>Noget Andet</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="inputDate">Afgangsdato:</label>
+            <input type="date" class="form-control" id="inputDate"/>
+        </div>
+    </div>
+    <div class="col-sm-6 right-col">
+        <div class="form-group">
+            <label for="inputWeight">Vægt(kg):</label>
+            <input type="number" class="form-control" id="inputWeight"/>
+        </div>
+        <div class="form-group">
+            <label for="inputType">Type</label>
+            <select class="form-control" id="inputType">
+                <option>TODO</option>
+                <option>Add</option>
+                <option>Types</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="inputDimension">Længste dimension(cm):</label>
+            <input type="number" class="form-control" id="inputDimension"/>
+        </div>
+        <button type="submit" class="btn btn-default btn-primary">BEREGN</button>
+    </div>
 </div>
 <div class="row">
     <div class="col-md-4">

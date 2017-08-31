@@ -8,7 +8,7 @@ namespace CESEIT
     public class Pathfinder
     {
         private DistanceProvider _distanceProvider;
-        public Dictionary<Node,Node> Dijsktra(Graph graph, string source, string target, CargoType type, double weight)
+        public Dictionary<Node,Node> Dijsktra(Graph graph, string source, string target, CargoType type, double weight, (double, double) metric)
         {
             Dictionary<Node, double> dist = new Dictionary<Node, double>();
             Dictionary<Node, Node> prev = new Dictionary<Node, Node>();
@@ -39,7 +39,7 @@ namespace CESEIT
                 {
                     Node v = neighTup.node;
                     EdgeType etype = neighTup.edgetype;
-                    var newDist = dist[u] + _distanceProvider.Distance(u.Name, v.Name, etype, weight);
+                    var newDist = dist[u] + _distanceProvider.Distance(u.Name, v.Name, etype, weight, metric);
                     if (newDist < dist[v])
                     {
                         dist[v] = newDist;

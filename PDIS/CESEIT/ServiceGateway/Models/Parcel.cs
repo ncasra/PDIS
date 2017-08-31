@@ -7,7 +7,7 @@ namespace ServiceGateway.Models
 {
     public class Parcel
     {
-        public string Date;
+        public string ShipmentDate;
         public double WeightInKg;
         public double LargestSizeInCm;
         public string GoodsType;
