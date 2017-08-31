@@ -3,7 +3,7 @@
         <button ng-click="testTelstar()">Test telstar</button>
         <button ng-click="testOceanic()">Test oceanic</button>
     </div>*@
-    <div class="row delivery-details-row">
+    <div class="row delivery-details-row" ng-hide="showKvittering">
         <div class="col-sm-6">
             <div class="form-group">
                 <label for="inputFrom">Fra:</label>
@@ -17,7 +17,7 @@
             </div>
             <div class="form-group">
                 <label for="inputDate">Forsendelsesdato:</label>
-                <input type="date" class="form-control" ng-model="sendDate" id="inputDate"/>
+                <input type="date" class="form-control" min="{{getMinDateString()}}" ng-model="sendDate" id="inputDate"/>
             </div>
         </div>
         <div class="col-sm-6">
@@ -37,7 +37,7 @@
             <button type="submit" class="btn btn-default btn-primary" ng-click="getRoutesForDelivery(selectedFromLocation, selectedToLocation, cargoWeight, selectedCargoType,longestDimension, sendDate)">BEREGN</button>
         </div>
     </div>
-    <div class="row">
+    <div class="row" ng-hide="showKvittering">
         <div class="col-xs-12">
             <div class="delivery-options">
                 <div ng-if="fastestRoute" class="delivery-option" ng-click="selectRoute(fastestRoute)" data-toggle="modal" data-target="#orderModal">
@@ -71,6 +71,13 @@
             </div>
         </div>
     </div>
+    <div class="row" ng-if="showKvittering && selectedRoute">
+        <h1>Kvittering</h1>
+        <h3 ng-bind="generateRouteList(selectedRoute)"></h3>
+        <div>Leveringsdato: {{getDeliveryDate(queriedDate, selectedRoute.RouteInfo.TotalTime)}}</div>
+        <div>Pris: {{selectedRoute.RouteInfo.TotalCost}}</div>
+        <div>Type: {{selectedCargoType.displayName}}</div>
+    </div>
     <div class="modal fade" id="orderModal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -83,8 +90,11 @@
                         <h3 ng-bind="selectedRoute.RouteTypes === 0 ? 'Billigste' : 'Hurtigste'"></h3>
                         <h4 ng-bind="generateRouteList(selectedRoute.RouteInfo.route)"></h4>
                         <div>Leveringsdato: {{getDeliveryDate(queriedDate, selectedRoute.RouteInfo.TotalTime)}}</div>
-                        <div>Pris: {{selectedRoute.RouteInfo.TotalCost}}</div>
                         <div>Type: {{selectedCargoType.displayName}}</div>
+                        <div>Kundenummer: {{customerNo}}</div>
+                        <div>Pris: {{selectedRoute.RouteInfo.TotalCost}}</div>
+                        <div>Rabat: {{selectedRoute.RouteInfo.TotalCost*discount/100}}</div>
+                        <div>Total: {{selectedRoute.RouteInfo.TotalCost-selectedRoute.RouteInfo.TotalCost*discount/100}}</div>
                     </div>
                     <div class="order-details">
                         <div class="form-group">
@@ -95,12 +105,12 @@
                             <label for="inputDiscount">Rabat (%):</label>
                             <input type="number" ng-model="discount" class="form-control" id="inputDiscount"/>
                         </div>
-                        <div>Pris efter rabat: {{selectedRoute.RouteInfo.TotalCost*discount/100}}</div>
+                        <div>Pris efter rabat: {{selectedRoute.RouteInfo.TotalCost-selectedRoute.RouteInfo.TotalCost*discount/100}}</div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">ANNULLER</button>
-                    <button type="button" class="btn btn-primary">OPRET</button>
+                    <button type="button" class="btn btn-primary" ng-click="showKvittering=true" data-dismiss="modal">OPRET</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
