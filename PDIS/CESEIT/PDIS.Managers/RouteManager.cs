@@ -1,6 +1,7 @@
 ﻿using CESEIT;
 using Newtonsoft.Json;
 using PDIS.Model;
+using ServiceGateway.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -13,12 +14,16 @@ namespace PDIS.Managers
     {
         private readonly DistanceProvider _distanceProvider;
         private readonly Pathfinder _pathfinder;
+        private readonly TLService _tlService;
+        private readonly OAService _oaService;
         private Graph _africaGraph;
 
         public RouteManager()
         {
             _distanceProvider = new DistanceProvider();
             _pathfinder = new Pathfinder(_distanceProvider);
+            _tlService = new TLService();
+            _oaService = new OAService();
             ConstructGraph();
         }
 
@@ -81,6 +86,15 @@ namespace PDIS.Managers
                 (RouteTypes.GoldenMiddleWay, aristotelesRoute),
                 (RouteTypes.Greedy, greedyRoute),
             };
+        }
+
+        public string GetTelstar(string source, string target)
+        {
+            return JsonConvert.SerializeObject(_tlService.GetRoute(source, target, "2017-01-01", 1.0, 1.0, "WEAPONS", false).Result);
+        }
+        public string GetOceanic(string source, string target)
+        {
+            return JsonConvert.SerializeObject(_oaService.GetRoute(source, target, "2017-01-01", 1.0, 1.0, "WEAPONS", false).Result);
         }
 
 
