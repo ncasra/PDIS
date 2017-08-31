@@ -88,13 +88,13 @@ namespace PDIS.Managers
             };
         }
 
-        public string GetTelstar()
+        public string GetTelstar(string source, string target)
         {
-            return JsonConvert.SerializeObject(_tlService.GetRoute("Tripoli", "Tunis", "2017-01-01", 1.0, 1.0, "WEAPONS", false).Result);
+            return JsonConvert.SerializeObject(_tlService.GetRoute(source, target, "2017-01-01", 1.0, 1.0, "WEAPONS", false).Result);
         }
-        public string GetOceanic()
+        public string GetOceanic(string source, string target)
         {
-            return JsonConvert.SerializeObject(_oaService.GetRoute("Tripoli", "Tanger", "2017-01-01", 1.0, 1.0, "WEAPONS", false).Result);
+            return JsonConvert.SerializeObject(_oaService.GetRoute(source, target, "2017-01-01", 1.0, 1.0, "WEAPONS", false).Result);
         }
 
 

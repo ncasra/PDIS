@@ -12,16 +12,16 @@ namespace PDIS.Frontend.Controllers
     {
         private RouteManager _routeManager = new RouteManager();
 
-        [Route("GetTelstar")]
-        public string GetTelstar()
+        [Route("GetTelstar/{source}/{target}")]
+        public string GetTelstar(string source, string target)
         {
-            return _routeManager.GetTelstar();
+            return _routeManager.GetTelstar(source, target);
         }
 
-        [Route("GetOceanic")]
-        public string GetOceanic()
+        [Route("GetOceanic/{source}/{target}")]
+        public string GetOceanic(string source, string target)
         {
-            return _routeManager.GetOceanic();
+            return _routeManager.GetOceanic(source, target);
         }
     }
 }
