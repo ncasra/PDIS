@@ -118,12 +118,12 @@ namespace ServiceGateway.Controllers
                 return response;
             }
             //Look-up price and time via data from requestObject
-            (double time, double price) priceTime;
+            Tuple<double, double> priceTime;
             int transID;
             try
             {
-                priceTime = _priceRepo.Get(requestObject.Source, requestObject.Target, DateTime.Parse(requestObject.Parcel.ShipmentDate), requestObject.Parcel.GoodsType, requestObject.Parcel.WeightInKg, requestObject.Parcel.LargestSizeInCm);
-                transID = int.Parse(_orderRepo.CreateExternalOrder(supplierID.ToString(), priceTime.price, requestObject.Source, requestObject.Target, requestObject.Parcel.GoodsType, requestObject.Parcel.WeightInKg, requestObject.Parcel.LargestSizeInCm, priceTime.time, DateTime.Now.AddDays(1)));
+                priceTime = _priceRepo.GetSG(requestObject.Source, requestObject.Target, DateTime.Parse(requestObject.Parcel.ShipmentDate), requestObject.Parcel.GoodsType, requestObject.Parcel.WeightInKg, requestObject.Parcel.LargestSizeInCm);
+                transID = int.Parse(_orderRepo.CreateExternalOrder(supplierID.ToString(), priceTime.Item2, requestObject.Source, requestObject.Target, requestObject.Parcel.GoodsType, requestObject.Parcel.WeightInKg, requestObject.Parcel.LargestSizeInCm, priceTime.Item1, DateTime.Now.AddDays(1)));
             }
             catch (Exception)
             {
@@ -136,8 +136,8 @@ namespace ServiceGateway.Controllers
             //Fill answer
             RouteResponse answer = new RouteResponse()
             {
-                TimeInHours = (int)Math.Ceiling(priceTime.time),
-                CostInDollars = priceTime.price,
+                TimeInHours  = (int)Math.Ceiling(priceTime.Item1),
+                CostInDollars = priceTime.Item2,
                 TransactionID = transID,
 
             };

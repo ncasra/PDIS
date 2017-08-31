@@ -20,6 +20,11 @@ namespace PDIS.DataAccess
 
         //Get price and time given start and finish and date from RouteData table
 
+        public Tuple<double, double> GetSG(string source, string target, DateTime date, string ctype, double weight, double largestDim)
+        {
+            var poidwa = Get(source, target, date, ctype, weight, largestDim);
+            return new Tuple<double, double>(poidwa.time, poidwa.price);
+        }
 
         public (double time, double price) Get(string source, string target, DateTime date, string ctype, double weight, double largestDim)
         {
