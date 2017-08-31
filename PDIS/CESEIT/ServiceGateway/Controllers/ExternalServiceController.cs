@@ -12,25 +12,30 @@ using System.Web.Http;
 
 namespace ServiceGateway.Controllers
 {
-    [System.Web.Http.RoutePrefix("api/ExternalServices")]
-    public class ExternelServiceController : ApiController
+    [System.Web.Http.RoutePrefix("api/ExternalService")]
+    public class ExternalServiceController : ApiController
     {
+        //TODO GET Alive Service
+
+
         private readonly NameValueCollection _users = (NameValueCollection)ConfigurationManager.GetSection("UserSection");
 
 
         [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("RouteRequest")]
+       // [WebInvoke(Method = "POST", UriTemplate = "PostEvent", BodyStyle = WebMessageBodyStyle.Bare, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         public async Task<HttpResponseMessage> GetRouteTimeAndCost(HttpRequestMessage request)
         {
             HttpResponseMessage response;
             //Ensure HTTPS
-            if (!(request.RequestUri.Scheme == Uri.UriSchemeHttps))
-            {
-                response = new HttpResponseMessage(HttpStatusCode.Forbidden)
-                {
-                    ReasonPhrase = "HTTPS Required",
-                };
-                return response;
-            }
+            //if (!(request.RequestUri.Scheme == Uri.UriSchemeHttps))
+            //{
+            //    response = new HttpResponseMessage(HttpStatusCode.Forbidden)
+            //    {
+            //        ReasonPhrase = "HTTPS Required",
+            //    };
+            //    return response;
+            //}
             IEnumerable<string> users;
             var getUserHeader = request.Headers.TryGetValues("username", out users);
             if (!getUserHeader)
