@@ -24,7 +24,7 @@ namespace PDIS.Managers
             _pathfinder = new Pathfinder(_distanceProvider);
             _tlService = new TLService();
             _oaService = new OAService();
-            ConstructGraph();
+            //ConstructGraph();
         }
 
         private void ConstructGraph()

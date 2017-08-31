@@ -12,7 +12,7 @@ namespace ServiceGateway.Services
     public class TLService
     {
         private HttpClient _client;
-        private readonly string _address = "TLAdresse.com";
+        private readonly string _address = "http://wa-tldk.azurewebsites.net";
         private readonly string _username = "TLUser";
         private readonly string _password = "TLPass";
 
@@ -25,6 +25,7 @@ namespace ServiceGateway.Services
 
         public async Task<RouteResponse> GetRoute(string source, string target, string shipmentDate, double weightInKg, double largestSizeinCm, string goodsType, bool recommended)
         {
+            _client.BaseAddress = new Uri(_client.BaseAddress.ToString() + "/JSONIntegration/FindRoutes");
             Parcel parcel = new Parcel()
             {
                 ShipmentDate = shipmentDate,
