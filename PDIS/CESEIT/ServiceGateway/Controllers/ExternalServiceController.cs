@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using PDIS.DataAccess;
 using ServiceGateway.Models;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,13 @@ namespace ServiceGateway.Controllers
 
 
         private readonly NameValueCollection _users = (NameValueCollection)ConfigurationManager.GetSection("UserSection");
+        private readonly PriceRepository _priceRepo;
+        private readonly OrderRepository _orderRepo;
 
+        public ExternalServiceController()
+        {
+            _priceRepo = new PriceRepository();
+        }
 
 
         [System.Web.Http.HttpPost]
@@ -32,6 +39,7 @@ namespace ServiceGateway.Controllers
         public async Task<HttpResponseMessage> GetRouteTimeAndCost(HttpRequestMessage request)
         {
             HttpResponseMessage response;
+            int supplierID = 0;
             //Ensure HTTPS
             //if (!(request.RequestUri.Scheme == Uri.UriSchemeHttps))
             //{
@@ -41,6 +49,7 @@ namespace ServiceGateway.Controllers
             //    };
             //    return response;
             //}
+            #region Validation
             IEnumerable<string> users;
             var getUserHeader = request.Headers.TryGetValues("username", out users);
             if (!getUserHeader)
@@ -51,6 +60,10 @@ namespace ServiceGateway.Controllers
                 };
                 return response;
             }
+            if (users.First() == "oceanic")
+                supplierID = 1;
+            else if (users.First() == "telstar")
+                supplierID = 2;
             string storedPassword = "";
             try
             {
@@ -88,7 +101,8 @@ namespace ServiceGateway.Controllers
                 };
                 return response;
             }
-            
+            #endregion
+
             var jstring = await request.Content.ReadAsStringAsync();
             RouteRequest requestObject;
             try
@@ -104,12 +118,27 @@ namespace ServiceGateway.Controllers
                 return response;
             }
             //Look-up price and time via data from requestObject
+            (double time, double price) priceTime;
+            int transID;
+            try
+            {
+                priceTime = _priceRepo.Get(requestObject.Source, requestObject.Target, DateTime.Parse(requestObject.Parcel.ShipmentDate), requestObject.Parcel.GoodsType, requestObject.Parcel.WeightInKg, requestObject.Parcel.LargestSizeInCm);
+                transID = int.Parse(_orderRepo.CreateExternalOrder(supplierID.ToString(), priceTime.price, requestObject.Source, requestObject.Target, requestObject.Parcel.GoodsType, requestObject.Parcel.WeightInKg, requestObject.Parcel.LargestSizeInCm, priceTime.time, DateTime.Now.AddDays(1)));
+            }
+            catch (Exception)
+            {
+                response = new HttpResponseMessage(HttpStatusCode.InternalServerError)
+                {
+                    ReasonPhrase = "Error retrieving price info",
+                };
+                return response;
+            }
             //Fill answer
             RouteResponse answer = new RouteResponse()
             {
-                TimeInHours = 1,
-                CostInDollars = 1,
-                TransactionID = 1,
+                TimeInHours = (int)Math.Ceiling(priceTime.time),
+                CostInDollars = priceTime.price,
+                TransactionID = transID,
 
             };
             response = new HttpResponseMessage(System.Net.HttpStatusCode.OK);
@@ -195,6 +224,7 @@ namespace ServiceGateway.Controllers
                 return response;
             }
             //Look-up price and time via data from requestObject
+
             //Fill answer
             OrderResponse answer = new OrderResponse()
             {

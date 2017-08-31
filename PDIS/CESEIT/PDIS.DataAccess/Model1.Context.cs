@@ -30,5 +30,6 @@ namespace PDIS.DataAccess
         public virtual DbSet<CargoType> CargoType { get; set; }
         public virtual DbSet<Supplier> Supplier { get; set; }
         public virtual DbSet<RouteData> RouteData { get; set; }
+        public virtual DbSet<Counter> Counter { get; set; }
     }
 }
