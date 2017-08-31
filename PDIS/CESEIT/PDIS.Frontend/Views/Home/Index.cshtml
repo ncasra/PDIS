@@ -1,5 +1,5 @@
 ﻿
-<div ng-controller="MainController" ng-init='initData(@Html.Raw(Json.Encode(ViewBag.CargoTypes)))'>
+<div ng-controller="MainController" ng-init='initData(@Html.Raw(Json.Encode(ViewBag.CargoTypes)),@Html.Raw(Json.Encode(ViewBag.Locations)))'>
     @*<div class="integration-test">
         <button ng-click="testTelstar()">Test telstar</button>
         <button ng-click="testOceanic()">Test oceanic</button>
@@ -8,41 +8,34 @@
         <div class="col-sm-6">
             <div class="form-group">
                 <label for="inputFrom">Fra:</label>
-                <select class="form-control" id="inputFrom">
-                    <option>Sierra Leone</option>
-                    <option>Noget andet</option>
+                <select class="form-control" ng-model="selectedFromLocation" ng-options="location as location for location in locations" id="inputFrom">
                 </select>
             </div>
             <div class="form-group">
                 <label for="inputTo">Til:</label>
-                <select class="form-control" id="inputTo">
-                    <option>Sierra Leone</option>
-                    <option>Noget Andet</option>
+                <select class="form-control" ng-model="selectedToLocation" ng-options="location as location for location in locations" id="inputTo">
                 </select>
             </div>
             <div class="form-group">
                 <label for="inputDate">Forsendelsesdato:</label>
-                <input type="date" class="form-control" id="inputDate"/>
+                <input type="date" class="form-control" ng-model="sendDate" id="inputDate"/>
             </div>
         </div>
         <div class="col-sm-6">
             <div class="form-group">
                 <label for="inputWeight">Vægt(kg):</label>
-                <input type="number" class="form-control" id="inputWeight"/>
+                <input type="number" class="form-control" ng-model="cargoWeight" id="inputWeight"/>
             </div>
             <div class="form-group">
                 <label for="inputType">Type</label>
-                <select class="form-control" id="inputType">
-                    <option>TODO</option>
-                    <option>Add</option>
-                    <option>Types</option>
+                <select class="form-control" id="inputType" ng-model="selectedCargoType" ng-options="cargoType as cargoType for cargoType in cargoTypes">
                 </select>
             </div>
             <div class="form-group">
                 <label for="inputDimension">Længste dimension(cm):</label>
-                <input type="number" class="form-control" id="inputDimension"/>
+                <input type="number" ng-model="longestDimension" class="form-control" id="inputDimension"/>
             </div>
-            <button type="submit" class="btn btn-default btn-primary">BEREGN</button>
+            <button type="submit" class="btn btn-default btn-primary" ng-click="getRoutesForDelivery(selectedFromLocation, selectedToLocation, cargoWeight, selectedCargoType,longestDimension, sendDate)">BEREGN</button>
         </div>
     </div>
     <div class="row">
@@ -97,11 +90,11 @@
                     <div class="order-details">
                         <div class="form-group">
                             <label for="inputCustomerNo">Kundenummer:</label>
-                            <input type="text" class="form-control" id="inputCustomerNo"/>
+                            <input type="text" class="form-control" ng-model="customerNo" id="inputCustomerNo"/>
                         </div>
                         <div class="form-group">
                             <label for="inputDiscount">Rabat (%):</label>
-                            <input type="number" ng-model="rabat" class="form-control" id="inputDiscount"/>
+                            <input type="number" ng-model="rabat" ng-model="discount" class="form-control" id="inputDiscount"/>
                         </div>
                         <div>Pris efter rabat: </div>
                     </div>
