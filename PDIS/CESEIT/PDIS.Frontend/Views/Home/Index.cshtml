@@ -1,4 +1,4 @@
-﻿<div class="row">
+﻿<div class="row delivery-details-row">
     <div class="col-sm-6">
         <div class="form-group">
             <label for="inputFrom">Fra:</label>
@@ -19,7 +19,7 @@
             <input type="date" class="form-control" id="inputDate"/>
         </div>
     </div>
-    <div class="col-sm-6 right-col">
+    <div class="col-sm-6">
         <div class="form-group">
             <label for="inputWeight">Vægt(kg):</label>
             <input type="number" class="form-control" id="inputWeight"/>
@@ -40,21 +40,70 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>ASP.NET Web API is a framework that makes it easy to build HTTP services that reach
-        a broad range of clients, including browsers and mobile devices. ASP.NET Web API
-        is an ideal platform for building RESTful applications on the .NET Framework.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301870">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301871">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301872">Learn more &raquo;</a></p>
+    <div class="col-xs-12">
+        <div class="delivery-options">
+            <div class="delivery-option" data-toggle="modal" data-target="#orderModal">
+                <h2>Hurtigste</h2>
+                <h4>TODO - TODO - TODO</h4>
+                <div class="delivery-information">
+                    <div>
+                        <span><strong>Leveringsdato: </strong></span>
+                        <span>02-09-2017</span>
+                    </div>
+                    <div>
+                        <span><strong>Pris: </strong></span>
+                        <span>3000</span>
+                    </div>
+                </div>
+            </div>
+            <div class="delivery-option" data-toggle="modal" data-target="#orderModal">
+                <h2>Billigste</h2>
+                <h4 class="route">TODO - TODO</h4>
+                <div class="delivery-information">
+                    <div>
+                        <span><strong>Leveringsdato: </strong></span>
+                        <span>05-09-2017</span>                        
+                    </div>
+                    <div>
+                        <span><strong>Pris: </strong></span>
+                        <span>500</span>                        
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+<div class="modal fade" id="orderModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h2 class="modal-title">Book transport</h2>
+            </div>
+            <div class="modal-body">
+                <div class="transport-details">
+                    <h3>TODOste</h3>
+                    <h4>TODO - TODO - TODO</h4>
+                    <div>Leveringsdato:</div>
+                    <div>Pris:</div>
+                    <div>Type:</div>
+                </div>
+                <div class="order-details">
+                    <div class="form-group">
+                        <label for="inputCustomerNo">Kundenummer:</label>
+                        <input type="text" class="form-control" id="inputCustomerNo"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputDiscount">Rabat (%):</label>
+                        <input type="number" class="form-control" id="inputDiscount" />
+                    </div>
+                    <div>Pris efter rabat: </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">ANNULLER</button>
+                <button type="button" class="btn btn-primary">OPRET</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
