@@ -17,6 +17,8 @@ namespace PDIS.Managers
         private readonly TLService _tlService;
         private readonly OAService _oaService;
         private Graph _africaGraph;
+        private Dictionary<int, RouteInfo> _storedRoutes;
+        private int _runningKey;
 
         public RouteManager()
         {
@@ -24,6 +26,8 @@ namespace PDIS.Managers
             _pathfinder = new Pathfinder(_distanceProvider);
             _tlService = new TLService();
             _oaService = new OAService();
+            _storedRoutes = new Dictionary<int, RouteInfo>();
+            _runningKey = 0;
             //ConstructGraph();
         }
 
@@ -85,6 +89,17 @@ namespace PDIS.Managers
             var fastestRoute = _pathfinder.GetRoute(_africaGraph, source, target, cargoType, weight, largestSize,shipmentDate, (1, 0));
             var aristotelesRoute = _pathfinder.GetRoute(_africaGraph, source, target, cargoType, weight, largestSize,shipmentDate, (1, 1));
             var greedyRoute = _pathfinder.GetRoute(_africaGraph, source, target, cargoType, weight, largestSize, shipmentDate, (1, 1), preferShip: true);
+            cheapestRoute.RouteId = _runningKey;
+            _storedRoutes.Add(_runningKey, cheapestRoute);
+            _runningKey++;
+            fastestRoute.RouteId = _runningKey;
+            _storedRoutes.Add(_runningKey, fastestRoute);
+            _runningKey++;
+            aristotelesRoute.RouteId = _runningKey;
+            _storedRoutes.Add(_runningKey, aristotelesRoute);
+            _runningKey++;
+            greedyRoute.RouteId = _runningKey;
+            _storedRoutes.Add(_runningKey, greedyRoute);
             return new List<(RouteTypes, RouteInfo)>()
             {
                 (RouteTypes.Cheapest, cheapestRoute),
@@ -92,6 +107,14 @@ namespace PDIS.Managers
                 (RouteTypes.GoldenMiddleWay, aristotelesRoute),
                 (RouteTypes.Greedy, greedyRoute),
             };
+        }
+
+
+        public bool BuyRoute(int routeId)
+        {
+
+
+            throw new NotImplementedException();
         }
 
         public string GetTelstar(string source, string target)

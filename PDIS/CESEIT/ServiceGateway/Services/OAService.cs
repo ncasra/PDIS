@@ -12,7 +12,7 @@ namespace ServiceGateway.Services
     public class OAService
     {
         private HttpClient _client;
-        private readonly string _address = "http://OAAdresse.com";
+        private readonly string _address = "http://wa-oadk.azurewebsites.net";
         private readonly string _username = "OAUser";
         private readonly string _password = "OAPass";
 
@@ -44,8 +44,10 @@ namespace ServiceGateway.Services
             message.Content = new StringContent(jstring);
             message.Headers.Add("username", _username);
             message.Headers.Add("password", _password);
+            message.Method = HttpMethod.Post;
+            message.RequestUri = new Uri(_client.BaseAddress.ToString() + "api/routeRequest");
 
-            var response = await _client.SendAsync(message);
+            var response = _client.SendAsync(message).Result;
             var resultString = response.Content.ReadAsStringAsync().Result;
 
             var routeResp = JsonConvert.DeserializeObject<RouteResponse>(resultString);
