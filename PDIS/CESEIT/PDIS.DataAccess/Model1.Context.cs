@@ -26,5 +26,8 @@ namespace PDIS.DataAccess
         }
     
         public virtual DbSet<Price> Price { get; set; }
+        public virtual DbSet<Quote> Quote { get; set; }
+        public virtual DbSet<CargoType> CargoType { get; set; }
+        public virtual DbSet<Supplier> Supplier { get; set; }
     }
 }

@@ -4,7 +4,15 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CargoType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ChargeValue" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
         <EntityType Name="Price">
           <Key>
             <PropertyRef Name="Id" />
@@ -15,11 +23,36 @@
           <Property Name="WeightTo" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Price" Type="decimal" Precision="18" Scale="2" Nullable="false" />
         </EntityType>
+        <EntityType Name="Quote">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Supplier_Id" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="QuotedPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Origin" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Destination" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Type_Id" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Weight" Type="decimal" Precision="18" Scale="3" Nullable="false" />
+          <Property Name="Widest_Dimension" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="TransportTime" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="ValidUntil" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="Accepted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="CargoType" EntityType="Self.CargoType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Price" EntityType="Self.Price" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Quote" EntityType="Self.Quote" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Supplier" EntityType="Self.Supplier" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -35,7 +68,41 @@
         </EntityType>
         <EntityContainer Name="PDIS" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Price" EntityType="Self.Price" />
+          <EntitySet Name="Quote" EntityType="Model.Quote" />
+          <EntitySet Name="CargoType" EntityType="Model.CargoType" />
+          <EntitySet Name="Supplier" EntityType="Model.Supplier" />
         </EntityContainer>
+        <EntityType Name="Quote">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Supplier_Id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="QuotedPrice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Origin" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Destination" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Type_Id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Weight" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <Property Name="Widest_Dimension" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="TransportTime" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="ValidUntil" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="Accepted" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CargoType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ChargeValue" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -50,6 +117,40 @@
                 <ScalarProperty Name="WeightFrom" ColumnName="WeightFrom" />
                 <ScalarProperty Name="WeightTo" ColumnName="WeightTo" />
                 <ScalarProperty Name="Price1" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Quote">
+            <EntityTypeMapping TypeName="Model.Quote">
+              <MappingFragment StoreEntitySet="Quote">
+                <ScalarProperty Name="Accepted" ColumnName="Accepted" />
+                <ScalarProperty Name="ValidUntil" ColumnName="ValidUntil" />
+                <ScalarProperty Name="TransportTime" ColumnName="TransportTime" />
+                <ScalarProperty Name="Widest_Dimension" ColumnName="Widest_Dimension" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="Type_Id" ColumnName="Type_Id" />
+                <ScalarProperty Name="Destination" ColumnName="Destination" />
+                <ScalarProperty Name="Origin" ColumnName="Origin" />
+                <ScalarProperty Name="QuotedPrice" ColumnName="QuotedPrice" />
+                <ScalarProperty Name="Supplier_Id" ColumnName="Supplier_Id" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CargoType">
+            <EntityTypeMapping TypeName="Model.CargoType">
+              <MappingFragment StoreEntitySet="CargoType">
+                <ScalarProperty Name="ChargeValue" ColumnName="ChargeValue" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Supplier">
+            <EntityTypeMapping TypeName="Model.Supplier">
+              <MappingFragment StoreEntitySet="Supplier">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

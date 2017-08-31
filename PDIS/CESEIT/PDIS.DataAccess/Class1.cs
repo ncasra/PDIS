@@ -12,13 +12,17 @@ namespace PDIS.DataAccess
         private DbContext context = new PDIS();
 
 
+
+
         public void testfunction()
         {
             using (var transaction = context.Database.BeginTransaction())
             {
+                Guid g = Guid.NewGuid();
+
                 Price price1 = new Price();
                 price1.ValidFrom = new DateTime(2017, 8, 31);
-                price1.Id = "0fjeai38903";
+                price1.Id = g.ToString();
                 price1.WeightFrom = 0;
                 price1.WeightTo = 0;
                 price1.Price1 = 100;
