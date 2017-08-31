@@ -12,6 +12,13 @@ namespace CESEIT
         public string Name;
 
 
+
+        public Node()
+        {
+            Neighbors = new List<(Node node, EdgeType edgetype)>();
+            Name = null;
+        }
+
         public Node(List<(Node, EdgeType)> neighs, string name)
         {
             Neighbors = neighs;

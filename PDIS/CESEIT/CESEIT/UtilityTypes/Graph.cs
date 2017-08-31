@@ -10,6 +10,10 @@ namespace CESEIT
     {
         public List<Node> Nodes;
 
+        public Graph()
+        {
+            Nodes = new List<Node>();
+        }
 
         public Graph(List<Node> nodes)
         {

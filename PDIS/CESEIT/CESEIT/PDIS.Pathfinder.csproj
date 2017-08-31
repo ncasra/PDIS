@@ -61,5 +61,15 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PDIS.Model\PDIS.Model.csproj">
+      <Project>{a10d2520-0bc3-43ab-8790-16c90d9d5f2b}</Project>
+      <Name>PDIS.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ServiceGateway\PDIS.ServiceGateway.csproj">
+      <Project>{C33FB637-6D8B-4E82-BD97-E41FDC7AAD19}</Project>
+      <Name>PDIS.ServiceGateway</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

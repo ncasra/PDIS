@@ -161,6 +161,8 @@
     <Compile Include="Models\RouteRequest.cs" />
     <Compile Include="Models\RouteResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\OAService.cs" />
+    <Compile Include="Services\TLService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />
@@ -177,7 +179,10 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Properties\PublishProfiles\wa-eitdk - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\wa-eitdk - Web Deploy.pubxml" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
