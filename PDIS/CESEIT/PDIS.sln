@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.13
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CESEIT", "CESEIT\CESEIT.csproj", "{1DC82812-6D91-4383-A627-70821F995C3B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PDIS.Pathfinder", "CESEIT\PDIS.Pathfinder.csproj", "{1DC82812-6D91-4383-A627-70821F995C3B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PDISServiceGateway", "ServiceGateway\PDISServiceGateway.csproj", "{C33FB637-6D8B-4E82-BD97-E41FDC7AAD19}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PDIS.ServiceGateway", "ServiceGateway\PDIS.ServiceGateway.csproj", "{C33FB637-6D8B-4E82-BD97-E41FDC7AAD19}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Backend", "Backend", "{48FEF8EB-7FD1-4296-9F69-0DAF10EA32D8}"
 EndProject

@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using ServiceGateway.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,19 +10,8 @@ using System.Web.Http;
 
 namespace ServiceGateway.Controllers
 {
-    public class RouteRequest
-    {
-        public string source;
-        public string target;
-    }
-
-    public class RouteResponse
-    {
-        public string Time;
-        public string Price;
-    }
     [System.Web.Http.RoutePrefix("api/test")]
-    public class TestController : ApiController
+    public class ExternelServiceController : ApiController
     {
 
 
@@ -29,11 +19,18 @@ namespace ServiceGateway.Controllers
         [System.Web.Http.Route("{user}/{pass}")]
         public async Task<HttpResponseMessage> GetRouteTimeAndCost(HttpRequestMessage request, string user, string pass)
         {
-            //Ensure HTTPS
-            bool httpsquestionmark = request.RequestUri.Scheme == Uri.UriSchemeHttps;
-            //if not return statuscode forbidden
-            
             HttpResponseMessage response;
+            //Ensure HTTPS
+            if (!(request.RequestUri.Scheme == Uri.UriSchemeHttps))
+            {
+                response = new HttpResponseMessage(HttpStatusCode.Forbidden)
+                {
+                    ReasonPhrase = "HTTPS Required",
+                };
+            }
+            
+            
+            
             if (user != "valid" && false) //validation
             {
                 response = new HttpResponseMessage(System.Net.HttpStatusCode.Forbidden)
