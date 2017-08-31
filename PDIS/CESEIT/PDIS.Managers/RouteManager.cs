@@ -19,6 +19,7 @@ namespace PDIS.Managers
         private Graph _africaGraph;
         private Dictionary<int, RouteInfo> _storedRoutes;
         private int _runningKey;
+        private OrderManager _orderManager;
 
         public RouteManager()
         {
@@ -28,7 +29,8 @@ namespace PDIS.Managers
             _oaService = new OAService();
             _storedRoutes = new Dictionary<int, RouteInfo>();
             _runningKey = 0;
-            //ConstructGraph();
+            _orderManager = new OrderManager();
+            ConstructGraph();
         }
 
         private void ConstructGraph()
@@ -67,6 +69,11 @@ namespace PDIS.Managers
                     nameNodes[city].Neighbors.Add((nameNodes[neighName], routeType));
                 }
             }
+        }
+
+        public List<string> GetCities()
+        {
+            return _africaGraph.Nodes.Select(s => s.Name).ToList();
         }
 
         public string GetRouteInfo(string source, string target, string cargoType, string weightInKg, string largestSizeInCm, string shipmentDate)
@@ -110,11 +117,13 @@ namespace PDIS.Managers
         }
 
 
-        public bool BuyRoute(int routeId)
+        public bool BuyRoute(int routeId, CargoType type, double weight)
         {
-
-
-            throw new NotImplementedException();
+            RouteInfo routeinf;
+            var tryget = _storedRoutes.TryGetValue(routeId, out routeinf);
+            if (!tryget)
+                return false;
+            return _orderManager.CreateInternalOrder(routeinf, type.ToString(), weight);
         }
 
         public string GetTelstar(string source, string target)
