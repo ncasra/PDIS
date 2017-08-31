@@ -20,9 +20,10 @@ namespace PDIS.Frontend.Controllers
             return View();
         }
 
-        public ActionResult Kvittering()
+        public ActionResult Kvittering(string route)
         {
-            return View("Kvittering");
+            ViewBag.KvitteringRoute = route;
+            return View();
         }
     }
 }
