@@ -12,7 +12,7 @@ namespace ServiceGateway.Services
     public class OAService
     {
         private HttpClient _client;
-        private readonly string _address = "OAAdresse.com";
+        private readonly string _address = "http://OAAdresse.com";
         private readonly string _username = "OAUser";
         private readonly string _password = "OAPass";
 
