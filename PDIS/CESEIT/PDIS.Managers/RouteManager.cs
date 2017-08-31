@@ -1,4 +1,5 @@
 ﻿using CESEIT;
+using Newtonsoft.Json;
 using PDIS.Model;
 using System;
 using System.Collections.Generic;
@@ -51,6 +52,20 @@ namespace PDIS.Managers
                     nameNodes[city].Neighbors.Add((nameNodes[neighName], routeType));
                 }
             }
+        }
+
+        public string GetRouteInfo(string source, string target, string cargoType, string weightInKg, string largestSizeInCm, string shipmentDate)
+        {
+            var type = (CargoType)Enum.Parse(typeof(CargoType), cargoType);
+            var weight = double.Parse(weightInKg);
+            var largest = double.Parse(largestSizeInCm);
+            var date = DateTime.Parse(shipmentDate);
+
+            var prelim = GetRouteInfo(source, target, type, weight, date);
+            var jstring = JsonConvert.SerializeObject(prelim);
+            return jstring;
+            
+
         }
 
         public List<(RouteTypes, RouteInfo)> GetRouteInfo(string source, string target, CargoType cargoType, double weight, DateTime shipmentDate)

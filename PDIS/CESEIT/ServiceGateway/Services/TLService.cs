@@ -46,7 +46,7 @@ namespace ServiceGateway.Services
             message.Headers.Add("password", _password);
 
             var response = await _client.SendAsync(message);
-            var resultString = response.Content.ReadAsStringAsync();
+            var resultString = response.Content.ReadAsStringAsync().Result;
 
             var routeResp = JsonConvert.DeserializeObject<RouteResponse>(resultString);
             return routeResp;

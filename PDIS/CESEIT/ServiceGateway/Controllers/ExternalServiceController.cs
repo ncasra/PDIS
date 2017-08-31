@@ -46,7 +46,7 @@ namespace ServiceGateway.Controllers
                 };
                 return response;
             }
-            string storedPassword;
+            string storedPassword = "";
             try
             {
                 storedPassword = _users.Get(users.First());
@@ -57,7 +57,7 @@ namespace ServiceGateway.Controllers
             }
 
 
-            if (storedPassword == null)
+            if (storedPassword == "")
             {
                 response = new HttpResponseMessage(HttpStatusCode.Forbidden)
                 {
@@ -111,6 +111,12 @@ namespace ServiceGateway.Controllers
             var jsonstring = JsonConvert.SerializeObject(answer);
             response.Content =  new StringContent(jsonstring);
             return response;
+        }
+
+
+        public async Task<HttpResponseMessage> Purchase(HttpRequestMessage request)
+        {
+            throw new NotImplementedException();
         }
 
     }
