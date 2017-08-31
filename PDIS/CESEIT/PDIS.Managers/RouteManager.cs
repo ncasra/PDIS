@@ -1,4 +1,4 @@
-﻿using CESEIT;
+﻿using PDIS.Pathfinder;
 using Newtonsoft.Json;
 using PDIS.Model;
 using ServiceGateway.Services;
@@ -13,7 +13,7 @@ namespace PDIS.Managers
     public class RouteManager
     {
         private readonly DistanceProvider _distanceProvider;
-        private readonly Pathfinder _pathfinder;
+        private readonly PathFinder _pathfinder;
         private readonly TLService _tlService;
         private readonly OAService _oaService;
         private Graph _africaGraph;
@@ -23,7 +23,7 @@ namespace PDIS.Managers
         public RouteManager()
         {
             _distanceProvider = new DistanceProvider();
-            _pathfinder = new Pathfinder(_distanceProvider);
+            _pathfinder = new PathFinder(_distanceProvider);
             _tlService = new TLService();
             _oaService = new OAService();
             _storedRoutes = new Dictionary<int, RouteInfo>();
