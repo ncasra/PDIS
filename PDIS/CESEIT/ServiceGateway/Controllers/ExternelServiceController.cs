@@ -12,15 +12,14 @@ using System.Web.Http;
 
 namespace ServiceGateway.Controllers
 {
-    [System.Web.Http.RoutePrefix("api/test")]
+    [System.Web.Http.RoutePrefix("api/ExternalServices")]
     public class ExternelServiceController : ApiController
     {
         private readonly NameValueCollection _users = (NameValueCollection)ConfigurationManager.GetSection("UserSection");
 
 
         [System.Web.Http.HttpPost]
-        [System.Web.Http.Route("{user}/{pass}")]
-        public async Task<HttpResponseMessage> GetRouteTimeAndCost(HttpRequestMessage request, string user, string pass)
+        public async Task<HttpResponseMessage> GetRouteTimeAndCost(HttpRequestMessage request)
         {
             HttpResponseMessage response;
             //Ensure HTTPS
@@ -61,21 +60,17 @@ namespace ServiceGateway.Controllers
             {
                 response = new HttpResponseMessage(HttpStatusCode.Forbidden)
                 {
-                    ReasonPhrase = "a2",
+                    ReasonPhrase = "'password' header required",
                 };
             }
-
-
-
-            
-            if (user != "valid" && false) //validation
+            if (passes.First() != storedPassword)
             {
-                response = new HttpResponseMessage(System.Net.HttpStatusCode.Forbidden)
+                response = new HttpResponseMessage(HttpStatusCode.Forbidden)
                 {
-                    ReasonPhrase = "User not valid",
+                    ReasonPhrase = "Incorrect password",
                 };
-                return response;            
             }
+            
             var jstring = await request.Content.ReadAsStringAsync();
             RouteRequest requestObject;
             try
@@ -98,14 +93,10 @@ namespace ServiceGateway.Controllers
                 TransactionID = 1,
 
             };
-            response = new HttpResponseMessage(System.Net.HttpStatusCode.OK)
-            {
-                ReasonPhrase = "Godt klaret",
-            };
+            response = new HttpResponseMessage(System.Net.HttpStatusCode.OK);
             var jsonstring = JsonConvert.SerializeObject(answer);
             response.Content =  new StringContent(jsonstring);
             return response;
-
         }
 
     }
