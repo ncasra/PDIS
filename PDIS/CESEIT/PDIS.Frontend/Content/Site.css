@@ -8,8 +8,29 @@
     padding-top: 20px;
     padding-right: 15px;
 }
-.right-col > * {
-    float: right;
+.delivery-option h2 {
+    margin: 0;
+}
+.delivery-information {
+    font-size: 16px;
+    padding-left: 20px;
+}
+.delivery-option .route {
+    padding-left: 10px;
+}
+.delivery-option {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+    padding: 15px;
+    margin: 15px;
+    cursor: pointer;
+}
+
+.delivery-option:hover {
+    background: #f2f2f2;
+}
+.delivery-details-row {
+    box-shadow: 0 3px 4px rgba(0, 0, 0, 0.3);
+    padding-bottom: 10px;
 }
 .top-bar {
     background: #2471FF;
@@ -36,4 +57,25 @@ input,
 select,
 textarea {
     max-width: 280px;
+}
+
+/* MODAL */
+.modal-header {
+    background: #2471ff;
+    color: white;
+}
+.transport-details {
+    padding-bottom: 15px;
+    margin-left: -20px;
+    margin-right: -20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-bottom: 1px solid #e5e5e5;
+    font-weight: bold;
+}
+.transport-details h3 {
+    margin: 0;
+}
+.order-details {
+    padding-top: 15px;
 }
