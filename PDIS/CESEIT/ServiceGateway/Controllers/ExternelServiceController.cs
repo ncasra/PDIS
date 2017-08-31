@@ -2,6 +2,8 @@
 using ServiceGateway.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -13,6 +15,7 @@ namespace ServiceGateway.Controllers
     [System.Web.Http.RoutePrefix("api/test")]
     public class ExternelServiceController : ApiController
     {
+        private readonly NameValueCollection _users = (NameValueCollection)ConfigurationManager.GetSection("UserSection");
 
 
         [System.Web.Http.HttpPost]
@@ -27,9 +30,43 @@ namespace ServiceGateway.Controllers
                 {
                     ReasonPhrase = "HTTPS Required",
                 };
+                return response;
             }
-            
-            
+            IEnumerable<string> users;
+            var getUserHeader = request.Headers.TryGetValues("username", out users);
+            if (!getUserHeader)
+            {
+                response = new HttpResponseMessage(HttpStatusCode.Forbidden)
+                {
+                    ReasonPhrase = "'username' header required",
+                };
+                return response;
+            }
+            string storedPassword;
+            try
+            {
+                storedPassword =  _users.Get(users.First());
+            }
+            catch (Exception)
+            {
+                response = new HttpResponseMessage(HttpStatusCode.Forbidden)
+                {
+                    ReasonPhrase = "Specified username not recognized",
+                };
+                return response;
+            }
+            IEnumerable<string> passes;
+            var getPassHeader = request.Headers.TryGetValues("password", out passes);
+            if (!getPassHeader)
+            {
+                response = new HttpResponseMessage(HttpStatusCode.Forbidden)
+                {
+                    ReasonPhrase = "a2",
+                };
+            }
+
+
+
             
             if (user != "valid" && false) //validation
             {
@@ -56,8 +93,10 @@ namespace ServiceGateway.Controllers
             //Fill answer
             RouteResponse answer = new RouteResponse()
             {
-                Time = "1h",
-                Price = "1kr",
+                TimeInHours = 1,
+                CostInDollars = 1,
+                TransactionID = 1,
+
             };
             response = new HttpResponseMessage(System.Net.HttpStatusCode.OK)
             {
