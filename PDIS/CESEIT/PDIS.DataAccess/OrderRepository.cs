@@ -44,9 +44,30 @@ namespace PDIS.DataAccess
 
 
 
-        public Boolean CompleteExternalOrder(string id)
+        public Boolean CompleteExternalOrder(string orderid, string supplierid)
         {
             var now = DateTime.Now;
+            IQueryable<Quote> qs = _context.Set<Quote>();
+
+            var query = from q in qs.Where(q => q.ValidUntil > now && q.Supplier_Id == supplierid)
+                        select q;
+            var result = query.ToList();
+            if (!result.Any())
+                return false;
+            var specQ = result.First();
+            try
+            {
+                using (var transaction = _context.Database.BeginTransaction(System.Data.IsolationLevel.Serializable))
+                {
+                    specQ.Accepted = true;
+                    _context.SaveChanges();
+                    transaction.Commit();
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
             return true;
         }
     }
