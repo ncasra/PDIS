@@ -1,4 +1,5 @@
 ﻿using PDIS.DataAccess;
+using PDIS.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +30,11 @@ namespace PDIS.Managers
             return "";
         }
 
+        public bool CreateInternalOrder(RouteInfo info, string type, double weight)
+        {
+            return _repository.CreateInternalOrder("0", info.TotalCost, info.RouteStops.First(), info.RouteStops.Last(), type.ToString(), weight);
+            
+        }
 
     }
 }

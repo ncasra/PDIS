@@ -10,6 +10,9 @@ namespace PDIS.DataAccess
     public class OrderRepository
     {
         private PDIS _context;
+        private string _NAVstring = "http://navvm-eitdk.westeurope.cloudapp.azure.com:7047/NAV/WS/CRONUS%20International%20Ltd./Codeunit/SalesInvoiceManagement";
+        private string _NAVuser = "admin-eitdk";
+        private string _NAVpass = "Eastindia4thewin";
 
         public OrderRepository()
         {
@@ -42,7 +45,10 @@ namespace PDIS.DataAccess
             return OrderID;
         }
 
-
+        public bool CreateInternalOrder(string v1, double totalCost, string v2, string v3, string v4, double weight)
+        {
+            return true;
+        }
 
         public Boolean CompleteExternalOrder(string orderid, string supplierid)
         {
