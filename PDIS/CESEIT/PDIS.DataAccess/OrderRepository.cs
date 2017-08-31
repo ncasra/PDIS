@@ -22,10 +22,13 @@ namespace PDIS.DataAccess
         public string CreateExternalOrder(string supplierId, double price, string start, string finish, string type_Id, double weight, double largestDim, double time, DateTime validUntil)
         {
             string OrderID;
+
             using (var transaction = _context.Database.BeginTransaction(System.Data.IsolationLevel.Serializable))
             {
+                
                 var order = new Quote()
                 {
+                    Id = 
                     Supplier_Id = supplierId,
                     QuotedPrice = (decimal)price,
                     Origin = start,
