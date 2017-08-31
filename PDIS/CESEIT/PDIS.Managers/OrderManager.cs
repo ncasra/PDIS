@@ -23,6 +23,11 @@ namespace PDIS.Managers
             return _repository.CreateExternalOrder( supplierId,  price,  start,  finish,  type_Id,  weight,  largestDim,  time,  validUntil);
         }
 
+        public string CompleteExternalOrder(string orderID)
+        {
+            _repository.CompleteExternalOrder(orderID);
+        }
+
 
     }
 }

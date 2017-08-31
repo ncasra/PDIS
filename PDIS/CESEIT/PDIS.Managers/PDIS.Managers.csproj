@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="OrderManager.cs" />
     <Compile Include="RouteManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -61,6 +62,10 @@
     <ProjectReference Include="..\CESEIT\PDIS.Pathfinder.csproj">
       <Project>{1DC82812-6D91-4383-A627-70821F995C3B}</Project>
       <Name>PDIS.Pathfinder</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PDIS.DataAccess\PDIS.DataAccess.csproj">
+      <Project>{ED201D93-72FB-495D-AEA6-5CB0E8C73FE5}</Project>
+      <Name>PDIS.DataAccess</Name>
     </ProjectReference>
     <ProjectReference Include="..\PDIS.Model\PDIS.Model.csproj">
       <Project>{a10d2520-0bc3-43ab-8790-16c90d9d5f2b}</Project>
