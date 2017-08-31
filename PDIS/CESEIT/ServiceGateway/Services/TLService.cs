@@ -12,9 +12,9 @@ namespace ServiceGateway.Services
     public class TLService
     {
         private HttpClient _client;
-        private readonly string _address = "TLAdresse.com";
-        private readonly string _username = "TLUser";
-        private readonly string _password = "TLPass";
+        private readonly string _address = "http://wa-tldk.azurewebsites.net";
+        private readonly string _username = "east_india_trading_co";
+        private readonly string _password = "sfE2Dwsa=Q";
 
         public TLService()
         {
@@ -25,6 +25,7 @@ namespace ServiceGateway.Services
 
         public async Task<RouteResponse> GetRoute(string source, string target, string shipmentDate, double weightInKg, double largestSizeinCm, string goodsType, bool recommended)
         {
+            //_client.BaseAddress = new Uri(_client.BaseAddress.ToString() + "JSONIntegration/FindRoutes");
             Parcel parcel = new Parcel()
             {
                 ShipmentDate = shipmentDate,
@@ -44,8 +45,10 @@ namespace ServiceGateway.Services
             message.Content = new StringContent(jstring);
             message.Headers.Add("username", _username);
             message.Headers.Add("password", _password);
+            message.Method = HttpMethod.Post;
+            message.RequestUri = new Uri(_client.BaseAddress.ToString() + "JSONIntegration/FindRoutes");
 
-            var response = await _client.SendAsync(message);
+            var response = _client.SendAsync(message).Result;
             var resultString = response.Content.ReadAsStringAsync().Result;
 
             var routeResp = JsonConvert.DeserializeObject<RouteResponse>(resultString);

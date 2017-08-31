@@ -15,7 +15,11 @@ namespace ServiceGateway.Controllers
     [System.Web.Http.RoutePrefix("api/ExternalService")]
     public class ExternalServiceController : ApiController
     {
+
         //TODO GET Alive Service
+        
+
+
 
 
         private readonly NameValueCollection _users = (NameValueCollection)ConfigurationManager.GetSection("UserSection");
