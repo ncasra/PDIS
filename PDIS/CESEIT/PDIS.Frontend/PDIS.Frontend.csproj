@@ -178,6 +178,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\DummyController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RouteController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -1039,6 +1040,10 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CESEIT\PDIS.Pathfinder.csproj">
+      <Project>{1dc82812-6d91-4383-a627-70821f995c3b}</Project>
+      <Name>PDIS.Pathfinder</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PDIS.Managers\PDIS.Managers.csproj">
       <Project>{BD9875B0-B0EE-4433-BCD4-8BE13F1507DE}</Project>
       <Name>PDIS.Managers</Name>
