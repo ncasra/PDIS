@@ -29,5 +29,6 @@ namespace PDIS.DataAccess
         public virtual DbSet<Quote> Quote { get; set; }
         public virtual DbSet<CargoType> CargoType { get; set; }
         public virtual DbSet<Supplier> Supplier { get; set; }
+        public virtual DbSet<RouteData> RouteData { get; set; }
     }
 }

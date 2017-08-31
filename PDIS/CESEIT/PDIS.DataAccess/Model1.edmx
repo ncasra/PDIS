@@ -39,6 +39,15 @@
           <Property Name="ValidUntil" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="Accepted" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="RouteData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="From" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="To" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Distance" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
         <EntityType Name="Supplier">
           <Key>
             <PropertyRef Name="Id" />
@@ -50,6 +59,7 @@
           <EntitySet Name="CargoType" EntityType="Self.CargoType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Price" EntityType="Self.Price" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Quote" EntityType="Self.Quote" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RouteData" EntityType="Self.RouteData" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Supplier" EntityType="Self.Supplier" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -71,6 +81,7 @@
           <EntitySet Name="Quote" EntityType="Model.Quote" />
           <EntitySet Name="CargoType" EntityType="Model.CargoType" />
           <EntitySet Name="Supplier" EntityType="Model.Supplier" />
+          <EntitySet Name="RouteData" EntityType="Model.RouteData" />
         </EntityContainer>
         <EntityType Name="Quote">
           <Key>
@@ -102,6 +113,15 @@
           </Key>
           <Property Name="Id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="RouteData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="From" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="To" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Distance" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -150,6 +170,16 @@
             <EntityTypeMapping TypeName="Model.Supplier">
               <MappingFragment StoreEntitySet="Supplier">
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RouteData">
+            <EntityTypeMapping TypeName="Model.RouteData">
+              <MappingFragment StoreEntitySet="RouteData">
+                <ScalarProperty Name="Distance" ColumnName="Distance" />
+                <ScalarProperty Name="To" ColumnName="To" />
+                <ScalarProperty Name="From" ColumnName="From" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

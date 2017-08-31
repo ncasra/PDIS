@@ -28,14 +28,18 @@ pdisApp.factory('orderService', ['$q', '$http', function($q,$http) {
 }]);
 pdisApp.controller('MainController', ['$scope', 'orderService', function ($scope, orderService) {
     $scope.rabat = 0;
-
-    $scope.initData = function (cargoTypes, locations) {
-        $scope.cargoTypes = cargoTypes;
-        $scope.selectedCargoType = cargoTypes[0];
+    $scope.cargoTypes = [
+        { displayName: "Normal", enumName: "NORMAL" },
+        { displayName: "Våben", enumName: "WEAPONS" },
+        { displayName: "Levende dyr", enumName: "LIVEANIMALS" },
+        { displayName: "Frostvarer", enumName: "REFRIGERATEDGOODS" }
+    ];
+    $scope.initData = function (locations) {
+        $scope.selectedCargoType = $scope.cargoTypes[0];
         $scope.locations = locations;
     };
     $scope.getRoutesForDelivery = function(from, to, weight, cargoType, longestDimension, date) {
-        orderService.getRoutesForDelivery(from, to, weight, cargoType, longestDimension, date).then(function (response) {
+        orderService.getRoutesForDelivery(from, to, weight, cargoType.enumName, longestDimension, date).then(function (response) {
             console.log(response);
             $scope.fastestRoute = response.data.routeDetails[0];
             $scope.cheapestRoute = response.data.routeDetails[1];
