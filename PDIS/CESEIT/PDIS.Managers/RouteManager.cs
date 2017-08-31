@@ -60,20 +60,20 @@ namespace PDIS.Managers
             var weight = double.Parse(weightInKg);
             var largest = double.Parse(largestSizeInCm);
             var date = DateTime.Parse(shipmentDate);
-
-            var prelim = GetRouteInfo(source, target, type, weight, date);
+            var size = double.Parse(largestSizeInCm);
+            var prelim = GetRouteInfo2(source, target, type, weight, size, date);
             var jstring = JsonConvert.SerializeObject(prelim);
             return jstring;
             
 
         }
 
-        public List<(RouteTypes, RouteInfo)> GetRouteInfo(string source, string target, CargoType cargoType, double weight, DateTime shipmentDate)
+        public List<(RouteTypes, RouteInfo)> GetRouteInfo2(string source, string target, CargoType cargoType, double weight, double largestSize, DateTime shipmentDate)
         {
-            var cheapestRoute = _pathfinder.GetRoute(_africaGraph, source, target, cargoType, weight, shipmentDate, (0, 1));
-            var fastestRoute = _pathfinder.GetRoute(_africaGraph, source, target, cargoType, weight, shipmentDate, (1, 0));
-            var aristotelesRoute = _pathfinder.GetRoute(_africaGraph, source, target, cargoType, weight, shipmentDate, (1, 1));
-            var greedyRoute = _pathfinder.GetRoute(_africaGraph, source, target, cargoType, weight, shipmentDate, (1, 1), preferShip: true);
+            var cheapestRoute = _pathfinder.GetRoute(_africaGraph, source, target, cargoType, weight, largestSize, shipmentDate, (0, 1));
+            var fastestRoute = _pathfinder.GetRoute(_africaGraph, source, target, cargoType, weight, largestSize,shipmentDate, (1, 0));
+            var aristotelesRoute = _pathfinder.GetRoute(_africaGraph, source, target, cargoType, weight, largestSize,shipmentDate, (1, 1));
+            var greedyRoute = _pathfinder.GetRoute(_africaGraph, source, target, cargoType, weight, largestSize, shipmentDate, (1, 1), preferShip: true);
             return new List<(RouteTypes, RouteInfo)>()
             {
                 (RouteTypes.Cheapest, cheapestRoute),

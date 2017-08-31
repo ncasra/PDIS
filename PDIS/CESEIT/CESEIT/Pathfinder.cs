@@ -15,10 +15,10 @@ namespace CESEIT
             _distanceProvider = distanceProvider;
         }
 
-        public RouteInfo GetRoute(Graph graph, string source, string target, CargoType type, double weight, DateTime date, (double, double) metric, bool preferShip = false)
+        public RouteInfo GetRoute(Graph graph, string source, string target, CargoType type, double weight, double largestSize, DateTime date, (double, double) metric, bool preferShip = false)
         {
             RouteInfo info = new RouteInfo();
-            var routeDict = Dijsktra(graph, source, target, type, weight, date, metric, preferShip);
+            var routeDict = Dijsktra(graph, source, target, type, weight, largestSize, date, metric, preferShip);
             info.RouteStops.Add(target);
             string currentnode = target;
             while (true)
@@ -42,7 +42,7 @@ namespace CESEIT
         }
 
 
-        private Dictionary<Node,Node> Dijsktra(Graph graph, string source, string target, CargoType type, double weight, DateTime date, (double time, double price) metric, bool preferShip = false)
+        private Dictionary<Node,Node> Dijsktra(Graph graph, string source, string target, CargoType type, double weight, double largestSize, DateTime date, (double time, double price) metric, bool preferShip = false)
         {
             Dictionary<Node, double> dist = new Dictionary<Node, double>();
             Dictionary<Node, Node> prev = new Dictionary<Node, Node>();
@@ -73,7 +73,7 @@ namespace CESEIT
                 {
                     Node v = neighTup.node;
                     EdgeType etype = neighTup.edgetype;
-                    var newDist = dist[u] + _distanceProvider.Distance(u.Name, v.Name, etype, weight, date, metric);
+                    var newDist = dist[u] + _distanceProvider.Distance(u.Name, v.Name, etype, weight, largestSize, type, date, metric, preferShip);
                     if (newDist < dist[v])
                     {
                         dist[v] = newDist;
