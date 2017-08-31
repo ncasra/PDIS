@@ -29,7 +29,7 @@ pdisApp.factory('orderService', ['$q', '$http', function($q,$http) {
 pdisApp.controller('MainController', ['$scope', 'orderService', function ($scope, orderService) {
     $scope.rabat = 0;
     $scope.cargoTypes = [
-        { displayName: "Normal", enumName: "NORMAL" },
+        { displayName: "Standard", enumName: "NORMAL" },
         { displayName: "Våben", enumName: "WEAPONS" },
         { displayName: "Levende dyr", enumName: "LIVEANIMALS" },
         { displayName: "Frostvarer", enumName: "REFRIGERATEDGOODS" }
@@ -46,6 +46,11 @@ pdisApp.controller('MainController', ['$scope', 'orderService', function ($scope
             $scope.fastestRoute = response.data[1];
         });
     };
+    $scope.getMinDateString = function () {
+        var date = new Date();
+        var month = date.getMonth()+1
+        return date.getFullYear() + "-" + (month<10?"0"+month:month) + "-" + date.getDate();
+    }
     $scope.getDeliveryDate = function(queriedDate, totalTime) {
         return new Date(queriedDate.getTime() + (totalTime * 60 * 60 * 1000));
     };
