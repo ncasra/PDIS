@@ -8,6 +8,7 @@ using System.Web.Http;
 
 namespace PDIS.Frontend.Controllers
 {
+    [System.Web.Http.RoutePrefix("api/Route")]
     public class RouteController : ApiController
     {
         private RouteManager _routeManager;
@@ -17,8 +18,8 @@ namespace PDIS.Frontend.Controllers
             _routeManager = new RouteManager();
         }
 
-        //URL: api/Route/GetRouteInfo/{source}?{target}?etc. (I think)
-        [Route("GetRouteInfo")]
+        //URL: api/Route/GetRouteInfo/?{source}&{target}&etc. (I think)
+        [System.Web.Http.Route("GetRouteInfo/{source}/{target}/{cargoType}/{weightInKg}/{largestSizeInCm}/{shipmentDate}")]
         public string GetRoute(string source, string target, string cargoType, string weightInKg, string largestSizeInCm, string shipmentDate)
         {
             var routeinfostring = _routeManager.GetRouteInfo(source, target, cargoType, weightInKg, largestSizeInCm, shipmentDate);
