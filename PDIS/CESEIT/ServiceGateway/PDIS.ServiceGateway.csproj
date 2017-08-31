@@ -161,6 +161,8 @@
     <Compile Include="Models\RouteRequest.cs" />
     <Compile Include="Models\RouteResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\OAService.cs" />
+    <Compile Include="Services\TLService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />

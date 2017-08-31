@@ -9,14 +9,14 @@ using System.Web;
 
 namespace ServiceGateway.Services
 {
-    public class OAService
+    public class TLService
     {
         private HttpClient _client;
-        private readonly string _address = "OAAdresse.com";
-        private readonly string _username = "OAUser";
-        private readonly string _password = "OAPass";
+        private readonly string _address = "TLAdresse.com";
+        private readonly string _username = "TLUser";
+        private readonly string _password = "TLPass";
 
-        public OAService()
+        public TLService()
         {
             _client = new HttpClient();
             _client.BaseAddress = new Uri(_address);
@@ -47,9 +47,9 @@ namespace ServiceGateway.Services
 
             var response = await _client.SendAsync(message);
             var resultString = response.Content.ReadAsStringAsync();
+            
 
-            var routeResp = JsonConvert.DeserializeObject<RouteResponse>(resultString);
-            return routeResp;
+            throw new NotImplementedException();
         }
     }
 }

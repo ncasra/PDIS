@@ -10,7 +10,7 @@ namespace ServiceGateway.Models
         public string ShipmentDate;
         public double WeightInKg;
         public double LargestSizeInCm;
-        public string GoodsType;
+        public string GoodsType;    
         public bool Recommended;
     }
 }

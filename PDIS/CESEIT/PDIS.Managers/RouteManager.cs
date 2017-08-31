@@ -12,7 +12,7 @@ namespace PDIS.Managers
     {
         private readonly DistanceProvider _distanceProvider;
         private readonly Pathfinder _pathfinder;
-        private readonly Graph _africaGraph;
+        private Graph _africaGraph;
 
         public RouteManager()
         {
@@ -23,10 +23,10 @@ namespace PDIS.Managers
 
         private void ConstructGraph()
         {
-            Graph AfricaGraph = new Graph();
-            HandleRoutes(EdgeType.Ship, "AfricaBoatGraph", AfricaGraph);
-            HandleRoutes(EdgeType.Car, "AfricaCarGraph", AfricaGraph);
-            HandleRoutes(EdgeType.Airplane, "AfricaAirplaneGraph", AfricaGraph);            
+            _africaGraph = new Graph();
+            HandleRoutes(EdgeType.Ship, "AfricaBoatGraph", _africaGraph);
+            HandleRoutes(EdgeType.Car, "AfricaCarGraph", _africaGraph);
+            HandleRoutes(EdgeType.Airplane, "AfricaAirplaneGraph", _africaGraph);            
         }
 
         private void HandleRoutes(EdgeType routeType, string sectionName, Graph africa)

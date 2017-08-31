@@ -47,9 +47,9 @@ namespace ServiceGateway.Services
 
             var response = await _client.SendAsync(message);
             var resultString = response.Content.ReadAsStringAsync();
-            
 
-            throw new NotImplementedException();
+            var routeResp = JsonConvert.DeserializeObject<RouteResponse>(resultString);
+            return routeResp;
         }
     }
 }

@@ -63,7 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PDIS.Model\PDIS.Model.csproj">
-      <Project>{A4E4ADA0-AF97-4561-84CC-E3FFF51D621C}</Project>
+      <Project>{a10d2520-0bc3-43ab-8790-16c90d9d5f2b}</Project>
       <Name>PDIS.Model</Name>
     </ProjectReference>
   </ItemGroup>

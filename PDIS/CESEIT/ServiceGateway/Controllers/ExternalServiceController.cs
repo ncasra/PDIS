@@ -46,7 +46,15 @@ namespace ServiceGateway.Controllers
                 };
                 return response;
             }
-            string storedPassword = _users.Get(users.First());
+            string storedPassword;
+            try
+            {
+                storedPassword = _users.Get(users.First());
+            }
+            catch (Exception)
+            {
+                response = new HttpResponseMessage(HttpStatusCode.InternalServerError);
+            }
 
 
             if (storedPassword == null)
