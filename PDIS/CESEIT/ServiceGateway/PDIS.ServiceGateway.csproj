@@ -177,7 +177,10 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Properties\PublishProfiles\wa-eitdk - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\wa-eitdk - Web Deploy.pubxml" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>

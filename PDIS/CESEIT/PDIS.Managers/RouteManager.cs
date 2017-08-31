@@ -53,15 +53,22 @@ namespace PDIS.Managers
             }
         }
 
-        public List<RouteInfo> GetRouteInfo(string source, string target, DateTime shipmentDate)
+        public List<(RouteTypes, RouteInfo)> GetRouteInfo(string source, string target, CargoType cargoType, double weight, DateTime shipmentDate)
         {
-            var cheapestRoute = new RouteInfo();
-            throw new NotImplementedException();
+            var cheapestRoute = _pathfinder.GetRoute(_africaGraph, source, target, cargoType, weight, shipmentDate, (0, 1));
+            var fastestRoute = _pathfinder.GetRoute(_africaGraph, source, target, cargoType, weight, shipmentDate, (1, 0));
+            var aristotelesRoute = _pathfinder.GetRoute(_africaGraph, source, target, cargoType, weight, shipmentDate, (1, 1));
+            var greedyRoute = _pathfinder.GetRoute(_africaGraph, source, target, cargoType, weight, shipmentDate, (1, 1), preferShip: true);
+            return new List<(RouteTypes, RouteInfo)>()
+            {
+                (RouteTypes.Cheapest, cheapestRoute),
+                (RouteTypes.Fastest, fastestRoute),
+                (RouteTypes.GoldenMiddleWay, aristotelesRoute),
+                (RouteTypes.Greedy, greedyRoute),
+            };
         }
 
 
     }
-}
-
 }
 

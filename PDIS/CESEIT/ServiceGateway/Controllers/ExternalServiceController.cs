@@ -46,12 +46,10 @@ namespace ServiceGateway.Controllers
                 };
                 return response;
             }
-            string storedPassword;
-            try
-            {
-                storedPassword =  _users.Get(users.First());
-            }
-            catch (Exception)
+            string storedPassword = _users.Get(users.First());
+
+
+            if (storedPassword == null)
             {
                 response = new HttpResponseMessage(HttpStatusCode.Forbidden)
                 {
@@ -67,6 +65,7 @@ namespace ServiceGateway.Controllers
                 {
                     ReasonPhrase = "'password' header required",
                 };
+                return response;
             }
             if (passes.First() != storedPassword)
             {
@@ -74,6 +73,7 @@ namespace ServiceGateway.Controllers
                 {
                     ReasonPhrase = "Incorrect password",
                 };
+                return response;
             }
             
             var jstring = await request.Content.ReadAsStringAsync();
@@ -88,6 +88,7 @@ namespace ServiceGateway.Controllers
                 {
                     ReasonPhrase = "Could not parse JSON",
                 };
+                return response;
             }
             //Look-up price and time via data from requestObject
             //Fill answer

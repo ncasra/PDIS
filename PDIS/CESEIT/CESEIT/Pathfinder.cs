@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PDIS.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,8 +15,34 @@ namespace CESEIT
             _distanceProvider = distanceProvider;
         }
 
+        public RouteInfo GetRoute(Graph graph, string source, string target, CargoType type, double weight, DateTime date, (double, double) metric, bool preferShip = false)
+        {
+            RouteInfo info = new RouteInfo();
+            var routeDict = Dijsktra(graph, source, target, type, weight, date, metric, preferShip);
+            info.RouteStops.Add(target);
+            string currentnode = target;
+            while (true)
+            {
+                Node prevNode;
+                bool getSuccess = routeDict.TryGetValue(graph.Nodes.First(n => n.Name == currentnode), out prevNode);
+                if (!getSuccess)
+                    break;
+                info.RouteStops.Insert(0, prevNode.Name);
+                currentnode = prevNode.Name;
+                if (currentnode == source)
+                    break;
+            }
+            for (int i = 0; i<info.RouteStops.Count -1; i++)
+            {
+                var timeAndMoney = _distanceProvider.GetEdgeInfo(info.RouteStops[i], info.RouteStops[i + 1]);
+                info.TotalCost += timeAndMoney.price;
+                info.TotalTime += timeAndMoney.time;
+            }
+            return info;
+        }
 
-        public Dictionary<Node,Node> Dijsktra(Graph graph, string source, string target, CargoType type, double weight, DateTime date, (double, double) metric)
+
+        private Dictionary<Node,Node> Dijsktra(Graph graph, string source, string target, CargoType type, double weight, DateTime date, (double time, double price) metric, bool preferShip = false)
         {
             Dictionary<Node, double> dist = new Dictionary<Node, double>();
             Dictionary<Node, Node> prev = new Dictionary<Node, Node>();
