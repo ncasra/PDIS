@@ -20,7 +20,8 @@ namespace PDIS.Frontend
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
             bundles.Add(new ScriptBundle("~/bundles/angularjs").Include(
-                "~/Scripts/angular.js"
+                "~/Scripts/angular.js",
+                "~/Content/ng/app.js"
             ));
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
