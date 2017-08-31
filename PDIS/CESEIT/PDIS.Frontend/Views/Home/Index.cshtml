@@ -1,5 +1,5 @@
 ﻿
-<div ng-controller="MainController" ng-init='initData(@Html.Raw(Json.Encode(ViewBag.CargoTypes)),@Html.Raw(Json.Encode(ViewBag.Locations)))'>
+<div ng-controller="MainController" ng-init='initData(@Html.Raw(Json.Encode(ViewBag.Locations)))'>
     @*<div class="integration-test">
         <button ng-click="testTelstar()">Test telstar</button>
         <button ng-click="testOceanic()">Test oceanic</button>
@@ -28,7 +28,7 @@
             </div>
             <div class="form-group">
                 <label for="inputType">Type</label>
-                <select class="form-control" id="inputType" ng-model="selectedCargoType" ng-options="cargoType as cargoType for cargoType in cargoTypes">
+                <select class="form-control" id="inputType" ng-model="selectedCargoType" ng-options="cargoType.displayName for cargoType in cargoTypes">
                 </select>
             </div>
             <div class="form-group">

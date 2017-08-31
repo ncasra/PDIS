@@ -8,6 +8,10 @@ namespace CESEIT
 {
     public enum CargoType
     {
-
+        NORMAL,
+        WEAPONS,
+        LIVEANIMALS,
+        REFRIGERATEDGOODS,
+        CAUTIOUS
     }
 }
