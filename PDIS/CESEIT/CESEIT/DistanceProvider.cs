@@ -9,7 +9,7 @@ namespace CESEIT
     public class DistanceProvider
     {
         //Cache already requested edges
-        public double Distance(string source, string target, EdgeType edgetype, double weight, (double, double) metric)
+        public double Distance(string source, string target, EdgeType edgetype, double weight, DateTime shipmentDate, (double, double) metric)
         {
             double dist = 0;
             switch (edgetype)
