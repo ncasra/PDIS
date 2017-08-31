@@ -13,6 +13,14 @@
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="ChargeValue" Type="decimal" Precision="18" Scale="2" Nullable="false" />
         </EntityType>
+        <EntityType Name="Counter">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CounterName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Number" Type="bigint" Nullable="false" />
+        </EntityType>
         <EntityType Name="Price">
           <Key>
             <PropertyRef Name="Id" />
@@ -57,6 +65,7 @@
         </EntityType>
         <EntityContainer Name="ModelStoreContainer">
           <EntitySet Name="CargoType" EntityType="Self.CargoType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Counter" EntityType="Self.Counter" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Price" EntityType="Self.Price" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Quote" EntityType="Self.Quote" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RouteData" EntityType="Self.RouteData" Schema="dbo" store:Type="Tables" />
@@ -82,6 +91,7 @@
           <EntitySet Name="CargoType" EntityType="Model.CargoType" />
           <EntitySet Name="Supplier" EntityType="Model.Supplier" />
           <EntitySet Name="RouteData" EntityType="Model.RouteData" />
+          <EntitySet Name="Counter" EntityType="Model.Counter" />
         </EntityContainer>
         <EntityType Name="Quote">
           <Key>
@@ -122,6 +132,14 @@
           <Property Name="From" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="To" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Distance" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="Counter">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CounterName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Number" Type="Int64" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -180,6 +198,15 @@
                 <ScalarProperty Name="Distance" ColumnName="Distance" />
                 <ScalarProperty Name="To" ColumnName="To" />
                 <ScalarProperty Name="From" ColumnName="From" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Counter">
+            <EntityTypeMapping TypeName="Model.Counter">
+              <MappingFragment StoreEntitySet="Counter">
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="CounterName" ColumnName="CounterName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

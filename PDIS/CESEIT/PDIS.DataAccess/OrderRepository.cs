@@ -25,10 +25,15 @@ namespace PDIS.DataAccess
 
             using (var transaction = _context.Database.BeginTransaction(System.Data.IsolationLevel.Serializable))
             {
-                
+                var counters = _context.Set<Counter>();
+                var qu = from c in counters.Where(c => c.CounterName == "ExternalOrderID")
+                         select c;
+                var count = qu.First();
+                count.Number++;
+
                 var order = new Quote()
                 {
-                    Id = 
+                    Id = count.Number.ToString(),
                     Supplier_Id = supplierId,
                     QuotedPrice = (decimal)price,
                     Origin = start,
