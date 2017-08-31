@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:tns="urn:microsoft-dynamics-schemas/codeunit/SalesInvoiceManagement" targetNamespace="urn:microsoft-dynamics-schemas/codeunit/SalesInvoiceManagement" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <schema elementFormDefault="qualified" targetNamespace="urn:microsoft-dynamics-schemas/codeunit/SalesInvoiceManagement" xmlns="http://www.w3.org/2001/XMLSchema">
+      <element name="SalesHeader">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="docNo" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="custNo" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="postDate" type="date" />
+            <element minOccurs="1" maxOccurs="1" name="type" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="SalesHeader_Result">
+        <complexType>
+          <sequence />
+        </complexType>
+      </element>
+      <element name="SalesLine">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="no" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="qty" type="decimal" />
+            <element minOccurs="1" maxOccurs="1" name="unitPrice" type="decimal" />
+            <element minOccurs="1" maxOccurs="1" name="docNo" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="SalesLine_Result">
+        <complexType>
+          <sequence />
+        </complexType>
+      </element>
+    </schema>
+  </types>
+  <message name="SalesHeader">
+    <part name="parameters" element="tns:SalesHeader" />
+  </message>
+  <message name="SalesHeader_Result">
+    <part name="parameters" element="tns:SalesHeader_Result" />
+  </message>
+  <message name="SalesLine">
+    <part name="parameters" element="tns:SalesLine" />
+  </message>
+  <message name="SalesLine_Result">
+    <part name="parameters" element="tns:SalesLine_Result" />
+  </message>
+  <portType name="SalesInvoiceManagement_Port">
+    <operation name="SalesHeader">
+      <input name="SalesHeader" message="tns:SalesHeader" />
+      <output name="SalesHeader_Result" message="tns:SalesHeader_Result" />
+    </operation>
+    <operation name="SalesLine">
+      <input name="SalesLine" message="tns:SalesLine" />
+      <output name="SalesLine_Result" message="tns:SalesLine_Result" />
+    </operation>
+  </portType>
+  <binding name="SalesInvoiceManagement_Binding" type="tns:SalesInvoiceManagement_Port">
+    <binding transport="http://schemas.xmlsoap.org/soap/http" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+    <operation name="SalesHeader">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/SalesInvoiceManagement:SalesHeader" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="SalesHeader">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output name="SalesHeader_Result">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+    </operation>
+    <operation name="SalesLine">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/SalesInvoiceManagement:SalesLine" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="SalesLine">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output name="SalesLine_Result">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+    </operation>
+  </binding>
+  <service name="SalesInvoiceManagement">
+    <port name="SalesInvoiceManagement_Port" binding="tns:SalesInvoiceManagement_Binding">
+      <address location="http://navvm-eitdk.westeurope.cloudapp.azure.com:7047/NAV/WS/CRONUS%20International%20Ltd./Codeunit/SalesInvoiceManagement" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+    </port>
+  </service>
+</definitions>

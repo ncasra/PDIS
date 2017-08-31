@@ -13,6 +13,7 @@ namespace PDIS.DataAccess
         private string _NAVstring = "http://navvm-eitdk.westeurope.cloudapp.azure.com:7047/NAV/WS/CRONUS%20International%20Ltd./Codeunit/SalesInvoiceManagement";
         private string _NAVuser = "admin-eitdk";
         private string _NAVpass = "Eastindia4thewin";
+        private NavServiceReference.SalesInvoiceManagement_PortClient cli;
 
         public OrderRepository()
         {
