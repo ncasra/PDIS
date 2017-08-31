@@ -1,4 +1,5 @@
 ﻿using PDIS.DataAccess;
+using PDIS.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,11 +24,17 @@ namespace PDIS.Managers
             return _repository.CreateExternalOrder( supplierId,  price,  start,  finish,  type_Id,  weight,  largestDim,  time,  validUntil);
         }
 
-        public string CompleteExternalOrder(string orderID)
+        public string CompleteExternalOrder(string orderID, string supplierId)
         {
-            _repository.CompleteExternalOrder(orderID);
+            _repository.CompleteExternalOrder(orderID, supplierId);
+            return "";
         }
 
+        public bool CreateInternalOrder(RouteInfo info, string type, double weight)
+        {
+            return _repository.CreateInternalOrder("0", info.TotalCost, info.RouteStops.First(), info.RouteStops.Last(), type.ToString(), weight);
+            
+        }
 
     }
 }

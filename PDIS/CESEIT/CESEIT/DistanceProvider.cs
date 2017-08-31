@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CESEIT
+namespace PDIS.Pathfinder
 {
     public class DistanceProvider
     {
@@ -76,7 +76,8 @@ namespace CESEIT
                     }
                     if (!trygetter)
                     {
-                        result = _tlService.GetRoute(source, target, shipmentDate.ToShortDateString(), weight, largestSizeInCm, cargoType.ToString(), false).Result;
+                        result = GetFromTelstar(source, target, shipmentDate, weight, largestSizeInCm, cargoType);
+                        
                         outPair = (result.TimeInHours, result.CostInDollars);
                         edgeInfo.Add((source, target), outPair);
                     }
@@ -92,7 +93,7 @@ namespace CESEIT
                     }
                     if (!trygetme)
                     {
-                        result = _oaService.GetRoute(source, target, shipmentDate.ToShortDateString(), weight, largestSizeInCm, cargoType.ToString(), false).Result;
+                        result = GetFromOceanic(source, target, shipmentDate, weight, largestSizeInCm, cargoType);                        
                         outPair = (result.TimeInHours, result.CostInDollars);
                         edgeInfo.Add((source, target), outPair);
                     }                    
@@ -101,6 +102,43 @@ namespace CESEIT
 
             }
             return dist;
+        }
+
+
+        private RouteResponse GetFromTelstar(string source, string target, DateTime shipmentDate, double weight, double largestSizeInCm, CargoType cargoType)
+        {
+            RouteResponse result;
+            try
+            {
+                result = _tlService.GetRoute(source, target, shipmentDate.ToShortDateString(), weight, largestSizeInCm, cargoType.ToString(), false).Result;
+            }
+            catch(Exception)
+            {
+                result = new RouteResponse()
+                {
+                    TimeInHours = int.MaxValue,
+                    CostInDollars = double.MaxValue,
+                };
+            }
+            return result;
+        }
+
+        private RouteResponse GetFromOceanic(string source, string target, DateTime shipmentDate, double weight, double largestSizeInCm, CargoType cargoType)
+        {
+            RouteResponse result;
+            try
+            {
+                result = _oaService.GetRoute(source, target, shipmentDate.ToShortDateString(), weight, largestSizeInCm, cargoType.ToString(), false).Result;
+            }
+            catch (Exception)
+            {
+                result = new RouteResponse()
+                {
+                    TimeInHours = int.MaxValue,
+                    CostInDollars = double.MaxValue,
+                };
+            }
+            return result;
         }
     }
 }

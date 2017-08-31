@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CESEIT
+namespace PDIS.Pathfinder
 {
     public class RouteNotFoundException : Exception
     {

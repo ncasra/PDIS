@@ -38,13 +38,22 @@ pdisApp.controller('MainController', ['$scope', 'orderService', function ($scope
         $scope.selectedCargoType = $scope.cargoTypes[0];
         $scope.locations = locations;
     };
-    $scope.getRoutesForDelivery = function(from, to, weight, cargoType, longestDimension, date) {
+    $scope.getRoutesForDelivery = function (from, to, weight, cargoType, longestDimension, date) {
+        $scope.queriedDate = date;
         orderService.getRoutesForDelivery(from, to, weight, cargoType.enumName, longestDimension, date).then(function (response) {
             console.log(response);
-            $scope.fastestRoute = response.data.routeDetails[0];
-            $scope.cheapestRoute = response.data.routeDetails[1];
+            $scope.cheapestRoute = response.data[0];
+            $scope.fastestRoute = response.data[1];
         });
     };
+    $scope.getDeliveryDate = function(queriedDate, totalTime) {
+        return new Date(queriedDate.getTime() + (totalTime * 60 * 60 * 1000));
+    };
+
+    $scope.selectRoute = function(selectedRoute) {
+        $scope.selectedRoute = selectedRoute;
+    }
+
     $scope.generateRouteList = function (route) {
         if (!route) {
             return;

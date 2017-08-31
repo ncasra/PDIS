@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-namespace CESEIT
+namespace PDIS.Pathfinder
 {
-    public class Pathfinder
+    public class PathFinder
     {
         private DistanceProvider _distanceProvider;
 
-        public Pathfinder(DistanceProvider distanceProvider)
+        public PathFinder(DistanceProvider distanceProvider)
         {
             _distanceProvider = distanceProvider;
         }

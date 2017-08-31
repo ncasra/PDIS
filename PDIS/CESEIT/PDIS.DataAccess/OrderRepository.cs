@@ -10,6 +10,9 @@ namespace PDIS.DataAccess
     public class OrderRepository
     {
         private PDIS _context;
+        private string _NAVstring = "http://navvm-eitdk.westeurope.cloudapp.azure.com:7047/NAV/WS/CRONUS%20International%20Ltd./Codeunit/SalesInvoiceManagement";
+        private string _NAVuser = "admin-eitdk";
+        private string _NAVpass = "Eastindia4thewin";
 
         public OrderRepository()
         {
@@ -19,10 +22,18 @@ namespace PDIS.DataAccess
         public string CreateExternalOrder(string supplierId, double price, string start, string finish, string type_Id, double weight, double largestDim, double time, DateTime validUntil)
         {
             string OrderID;
+
             using (var transaction = _context.Database.BeginTransaction(System.Data.IsolationLevel.Serializable))
             {
+                var counters = _context.Set<Counter>();
+                var qu = from c in counters.Where(c => c.CounterName == "ExternalOrderID")
+                         select c;
+                var count = qu.First();
+                count.Number++;
+
                 var order = new Quote()
                 {
+                    Id = count.Number.ToString(),
                     Supplier_Id = supplierId,
                     QuotedPrice = (decimal)price,
                     Origin = start,
@@ -42,7 +53,10 @@ namespace PDIS.DataAccess
             return OrderID;
         }
 
-
+        public bool CreateInternalOrder(string v1, double totalCost, string v2, string v3, string v4, double weight)
+        {
+            return true;
+        }
 
         public Boolean CompleteExternalOrder(string orderid, string supplierid)
         {
