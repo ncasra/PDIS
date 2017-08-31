@@ -30,21 +30,27 @@ namespace PDIS.Managers
         private void ConstructGraph()
         {
             _africaGraph = new Graph();
-            HandleRoutes(EdgeType.Ship, "AfricaBoatGraph", _africaGraph);
-            HandleRoutes(EdgeType.Car, "AfricaCarGraph", _africaGraph);
-            HandleRoutes(EdgeType.Airplane, "AfricaAirplaneGraph", _africaGraph);            
+            Dictionary<string, Node> nameNodes = new Dictionary<string, Node>();
+            HandleRoutes(EdgeType.Ship, "AfricaBoatGraph", _africaGraph, nameNodes);
+            HandleRoutes(EdgeType.Car, "AfricaCarGraph", _africaGraph, nameNodes);
+            HandleRoutes(EdgeType.Airplane, "AfricaAirplaneGraph", _africaGraph, nameNodes);            
         }
 
-        private void HandleRoutes(EdgeType routeType, string sectionName, Graph africa)
+        private void HandleRoutes(EdgeType routeType, string sectionName, Graph africa, Dictionary<string, Node> nameNodes)
         {
             NameValueCollection edges = (NameValueCollection)ConfigurationManager.GetSection(sectionName);
-            Dictionary<string, Node> nameNodes = new Dictionary<string, Node>();
             var keys = edges.AllKeys;
             foreach (var city in keys)
             {
-                var node = new Node() { Name = city };
-                nameNodes.Add(city, node);
-                africa.Nodes.Add(node);
+                Node node;
+                bool alreadyIndexedCity = nameNodes.TryGetValue(city, out node);
+                if (!alreadyIndexedCity)
+                {
+                    node = new Node() { Name = city };
+                    nameNodes.Add(city, node);
+                    africa.Nodes.Add(node);
+                }
+                
             }
             foreach (var city in keys)
             {
