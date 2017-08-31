@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using CESEIT;
 
-namespace ServiceGateway.Controllers
+namespace PDIS.Frontend.Controllers
 {
     public class HomeController : Controller
     {
@@ -18,6 +18,11 @@ namespace ServiceGateway.Controllers
             locations.Add("Dummy Wadai");
             ViewBag.Locations = locations;
             return View();
+        }
+
+        public ActionResult Kvittering()
+        {
+            return View("Kvittering");
         }
     }
 }
