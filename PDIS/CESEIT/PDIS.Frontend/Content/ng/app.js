@@ -29,8 +29,8 @@ pdisApp.factory('orderService', ['$q', '$http', function($q,$http) {
 pdisApp.controller('MainController', ['$scope', 'orderService', function ($scope, orderService) {
 
     $scope.orderDetails = {
-        customerNo: "a",
-        discount: 1
+        customerNo: "",
+        discount: 0
     };
     $scope.cargoTypes = [
         { displayName: "Standard", enumName: "NORMAL" },

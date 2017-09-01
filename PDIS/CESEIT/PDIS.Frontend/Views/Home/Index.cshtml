@@ -80,7 +80,7 @@
             <div>Kundenummer: {{orderDetails.customerNo}}</div>
             <div>Pris: {{selectedRoute.Item2.TotalCost}}</div>
             <div>Rabat: {{selectedRoute.Item2.TotalCost*orderDetails.discount/100}}</div>
-            <div>Total: {{selectedRoute.Item2.TotalCost-selectedRoute.Item2.TotalCost*orderDetails.discount/100}}</div>
+            <div><strong>Total: {{selectedRoute.Item2.TotalCost-selectedRoute.Item2.TotalCost*orderDetails.discount/100}}</strong></div>
         </div>
     </div>
     <div class="modal fade" id="orderModal" tabindex="-1" role="dialog">
@@ -107,7 +107,7 @@
                             <label for="inputDiscount">Rabat (%):</label>
                             <input type="number" ng-model="orderDetails.discount" class="form-control" id="inputDiscount"/>
                         </div>
-                        <div>Pris efter rabat: {{selectedRoute.Item2.TotalCost-selectedRoute.Item2.TotalCost*(orderDetails.discount?orderDetails.discount:0)/100}}</div>
+                        <div>Pris efter rabat: {{selectedRoute.Item2.TotalCost-selectedRoute.Item2.TotalCost*(orderDetails.discount?orderDetails.discount:0)/100}} (-{{selectedRoute.Item2.TotalCost*(orderDetails.discount?orderDetails.discount:0)/100}})</div>
                     </div>
                 </div>
                 <div class="modal-footer">
