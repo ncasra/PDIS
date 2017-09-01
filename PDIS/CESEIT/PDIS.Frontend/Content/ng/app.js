@@ -17,11 +17,11 @@ pdisApp.factory('orderService', ['$q', '$http', function($q,$http) {
     };
 
 
-    orderService.placeOrder = function (from, to, weight, type, longestDimension, date, customerNo, discount) {
+    orderService.placeOrder = function (routeId, type, weight, discount) {
         //Opret ordre
         return $http({
             method: 'POST',
-            url: '/someUrl'
+            url: '/api/Route/BuyRoute'+encodeUrlParameters([routeId,type,weight,discount])
         });
     }
     return orderService;
@@ -87,7 +87,8 @@ pdisApp.controller('MainController', ['$scope','$window', 'orderService', functi
         $scope.selectedRoute = selectedRoute;
     }
 
-    $scope.createOrder = function() {
+    $scope.createOrder = function () {
+        orderService.placeOrder($scope.selectedRoute.Item2.RouteId, $scope.selectedCargoType.enumName, $scope.cargoWeight, $scope.orderDetails.discount);
         $scope.showKvittering = true;
     }
     $scope.generateRouteList = function (route) {
