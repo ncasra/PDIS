@@ -17,7 +17,8 @@
             </div>
             <div class="form-group">
                 <label for="inputDate">Forsendelsesdato:</label>
-                <input type="date" class="form-control" min="{{getMinDateString()}}" ng-model="sendDate" id="inputDate"/>
+                <input type="text" class="form-control" uib-datepicker-popup="dd-MM-yyyy" ng-click="popup1.opened = true" ng-model="sendDate" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Luk" />
+                <!--<input type="date" class="form-control" min="{{getMinDateString()}}" ng-model="sendDate" id="inputDate"/>-->
             </div>
         </div>
         <div class="col-sm-6">
@@ -38,6 +39,11 @@
         </div>
     </div>
     <div class="row" ng-hide="showKvittering">
+        <div class="spinner" ng-if="loadingDeliveryOptions">
+            <div class="bounce1"></div>
+            <div class="bounce2"></div>
+            <div class="bounce3"></div>
+        </div>
         <div class="col-xs-12">
             <div class="delivery-options">
                 <div ng-if="fastestRoute" class="delivery-option" ng-click="selectRoute(fastestRoute)" data-toggle="modal" data-target="#orderModal">
@@ -81,6 +87,7 @@
             <div>Pris: {{selectedRoute.Item2.TotalCost}}</div>
             <div>Rabat: {{selectedRoute.Item2.TotalCost*orderDetails.discount/100}}</div>
             <div><strong>Total: {{selectedRoute.Item2.TotalCost-selectedRoute.Item2.TotalCost*orderDetails.discount/100}}</strong></div>
+            <button class="btn btn-default btn-primary close-receipt-button" ng-click="closeKvittering()">Luk kvittering</button>
         </div>
     </div>
     <div class="modal fade" id="orderModal" tabindex="-1" role="dialog">
