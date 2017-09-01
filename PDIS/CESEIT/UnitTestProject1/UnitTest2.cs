@@ -8,7 +8,7 @@ namespace UnitTestProject1
     public class UnitTest2
     {
         [TestMethod]
-        public void TestMethod1()
+        public void NAVIntTest()
         {
             OrderRepository repo = new OrderRepository();
             repo.CreateInternalOrder("1", 10.0, "Kapstaden", "St. Helena", "WEAPONS", 5.0);

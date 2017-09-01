@@ -30,6 +30,7 @@ namespace ServiceGateway.Controllers
         public ExternalServiceController()
         {
             _priceRepo = new PriceRepository();
+            _orderRepo = new OrderRepository();
         }
 
 
@@ -125,7 +126,7 @@ namespace ServiceGateway.Controllers
                 priceTime = _priceRepo.GetSG(requestObject.Source, requestObject.Target, DateTime.Parse(requestObject.Parcel.ShipmentDate), requestObject.Parcel.GoodsType, requestObject.Parcel.WeightInKg, requestObject.Parcel.LargestSizeInCm);
                 transID = int.Parse(_orderRepo.CreateExternalOrder(supplierID.ToString(), priceTime.Item2, requestObject.Source, requestObject.Target, requestObject.Parcel.GoodsType, requestObject.Parcel.WeightInKg, requestObject.Parcel.LargestSizeInCm, priceTime.Item1, DateTime.Now.AddDays(1)));
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 response = new HttpResponseMessage(HttpStatusCode.InternalServerError)
                 {
