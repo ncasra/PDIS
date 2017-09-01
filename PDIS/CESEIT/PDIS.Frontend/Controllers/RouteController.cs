@@ -26,6 +26,14 @@ namespace PDIS.Frontend.Controllers
             return routeinfostring;
         }
 
+        [System.Web.Http.Route("BuyRoute/{routeId}/{cargoType}/{weight}")]
+        public bool BuyRoute(int routeId, string cargoType, string weight)
+        {
+            var success = _routeManager.BuyRoute(routeId, cargoType, double.Parse(weight));
+            return success;
+        }
+
+
 
 
 
