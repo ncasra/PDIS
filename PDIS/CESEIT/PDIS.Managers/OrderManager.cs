@@ -30,9 +30,9 @@ namespace PDIS.Managers
             return "";
         }
 
-        public bool CreateInternalOrder(RouteInfo info, string type, double weight)
+        public bool CreateInternalOrder(RouteInfo info, string type, double weight, double discount)
         {
-            return _repository.CreateInternalOrder("0", info.TotalCost, info.RouteStops.First(), info.RouteStops.Last(), type.ToString(), weight);
+            return _repository.CreateInternalOrder("0", info.TotalCost*discount, info.RouteStops.First(), info.RouteStops.Last(), type.ToString(), weight);
             
         }
 

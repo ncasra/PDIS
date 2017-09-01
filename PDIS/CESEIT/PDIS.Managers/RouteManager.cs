@@ -117,18 +117,19 @@ namespace PDIS.Managers
         }
 
 
-        public bool BuyRoute(int routeId, CargoType type, double weight)
+        public bool BuyRoute(int routeId, string type, double weight, string discount)
         {
             RouteInfo routeinf;
             var tryget = _storedRoutes.TryGetValue(routeId, out routeinf);
             if (!tryget)
                 return false;
-            return _orderManager.CreateInternalOrder(routeinf, type.ToString(), weight);
+            return _orderManager.CreateInternalOrder(routeinf, type.ToString(), weight, double.Parse(discount));
         }
 
         public string GetTelstar(string source, string target)
         {
-            return JsonConvert.SerializeObject(_tlService.GetRoute(source, target, "2017-01-01", 1.0, 1.0, "WEAPONS", false).Result);
+            var theresult = _tlService.GetRoute(source, target, "2017-01-01", 1.0, 1.0, "WEAPONS", false).Result;
+            return JsonConvert.SerializeObject(theresult);
         }
         public string GetOceanic(string source, string target)
         {
