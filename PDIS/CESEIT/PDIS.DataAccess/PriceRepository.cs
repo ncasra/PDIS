@@ -8,12 +8,12 @@ namespace PDIS.DataAccess
 {
     public class PriceRepository
     {
-        private PDIS _context;
+        private PDISContext _context;
 
 
         public PriceRepository()
         {
-            _context = new PDIS();
+            _context = new PDISContext();
         }
 
 

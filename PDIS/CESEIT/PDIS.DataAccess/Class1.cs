@@ -9,7 +9,7 @@ namespace PDIS.DataAccess
 {
     public class Class1
     {
-        private DbContext context = new PDIS();
+        private DbContext context = new PDISContext();
 
 
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PDIS.DataAccess.NavServiceReference;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Policy;
@@ -9,15 +10,17 @@ namespace PDIS.DataAccess
 {
     public class OrderRepository
     {
-        private PDIS _context;
+        private PDISContext _context;
         private string _NAVstring = "http://navvm-eitdk.westeurope.cloudapp.azure.com:7047/NAV/WS/CRONUS%20International%20Ltd./Codeunit/SalesInvoiceManagement";
         private string _NAVuser = "admin-eitdk";
         private string _NAVpass = "Eastindia4thewin";
-        private NavServiceReference.SalesInvoiceManagement_PortClient cli;
+        private NavServiceReference.SalesInvoiceManagement_Port cli;
+        
 
         public OrderRepository()
         {
-            _context = new PDIS();
+            _context = new PDISContext();
+            cli = new SalesInvoiceManagement_PortClient();
         }
 
         public string CreateExternalOrder(string supplierId, double price, string start, string finish, string type_Id, double weight, double largestDim, double time, DateTime validUntil)
@@ -54,9 +57,28 @@ namespace PDIS.DataAccess
             return OrderID;
         }
 
-        public bool CreateInternalOrder(string v1, double totalCost, string v2, string v3, string v4, double weight)
+        public bool CreateInternalOrder(string id, double totalCost, string start, string finish, string cargotype, double weight)
         {
-            return true;
+            //var tester = new Sa
+            //_repository.CreateInternalOrder("0", info.TotalCost, info.RouteStops.First(), info.RouteStops.Last(), type.ToString(), weight);
+            var counterset = _context.Set<Counter>();
+            var query = from count in counterset.Where(c => c.CounterName == "NAVCounter")
+                        select count;
+
+            var navcounter = query.First();
+            SalesHeader head = new SalesHeader("1", "1", DateTime.Now.ToString(), "1");            
+            cli.SalesHeader(head);
+            SalesLine line = new SalesLine(navcounter.Number.ToString(), 1, (decimal)totalCost, "1");
+            cli.SalesLine(line);
+
+            
+            using (var trans = _context.Database.BeginTransaction(System.Data.IsolationLevel.Serializable))
+            {
+                navcounter.Number += 1;
+                _context.SaveChanges();
+                trans.Commit();
+            }
+                return true;
         }
 
         public Boolean CompleteExternalOrder(string orderid, string supplierid)

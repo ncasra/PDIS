@@ -13,9 +13,9 @@ namespace PDIS.DataAccess
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class PDIS : DbContext
+    public partial class PDISContext : DbContext
     {
-        public PDIS()
+        public PDISContext()
             : base("name=PDIS")
         {
         }
