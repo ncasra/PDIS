@@ -27,13 +27,18 @@ pdisApp.factory('orderService', ['$q', '$http', function($q,$http) {
     return orderService;
 }]);
 pdisApp.controller('MainController', ['$scope', 'orderService', function ($scope, orderService) {
-    $scope.rabat = 0;
+
+    $scope.orderDetails = {
+        customerNo: "a",
+        discount: 1
+    };
     $scope.cargoTypes = [
         { displayName: "Standard", enumName: "NORMAL" },
         { displayName: "Våben", enumName: "WEAPONS" },
         { displayName: "Levende dyr", enumName: "LIVEANIMALS" },
         { displayName: "Frostvarer", enumName: "REFRIGERATEDGOODS" }
     ];
+
     $scope.initData = function (locations) {
         $scope.selectedCargoType = $scope.cargoTypes[0];
         $scope.locations = locations;
@@ -41,24 +46,33 @@ pdisApp.controller('MainController', ['$scope', 'orderService', function ($scope
     $scope.getRoutesForDelivery = function (from, to, weight, cargoType, longestDimension, date) {
         $scope.queriedDate = date;
         orderService.getRoutesForDelivery(from, to, weight, cargoType.enumName, longestDimension, date).then(function (response) {
-            console.log(response);
-            $scope.cheapestRoute = response.data[0];
-            $scope.fastestRoute = response.data[1];
+            var jsonResponse = angular.fromJson(response.data);
+            $scope.cheapestRoute = jsonResponse[0];
+            $scope.fastestRoute = jsonResponse[1];
         });
     };
     $scope.getMinDateString = function () {
         var date = new Date();
-        var month = date.getMonth()+1
-        return date.getFullYear() + "-" + (month<10?"0"+month:month) + "-" + date.getDate();
+        var month = date.getMonth() + 1;
+        var day = date.getDate();
+        return date.getFullYear() + "-" + (month<10?"0"+month:month) + "-" + (day<10?"0"+day:day);
     }
-    $scope.getDeliveryDate = function(queriedDate, totalTime) {
-        return new Date(queriedDate.getTime() + (totalTime * 60 * 60 * 1000));
+
+    $scope.getDeliveryDate = function (queriedDate, totalTime) {
+        var queriedDateTime = new Date(queriedDate).getTime();
+        var date = new Date(queriedDateTime + (totalTime * 60 * 60 * 1000));
+        var month = date.getMonth() + 1;
+        var day = date.getDate();
+        return (day<10?"0"+day:day) + "-" + (month<10?"0"+month:month)+ "-" +date.getFullYear();
     };
 
     $scope.selectRoute = function(selectedRoute) {
         $scope.selectedRoute = selectedRoute;
     }
 
+    $scope.createOrder = function() {
+        $scope.showKvittering = true;
+    }
     $scope.generateRouteList = function (route) {
         if (!route) {
             return;

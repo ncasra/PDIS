@@ -42,29 +42,29 @@
             <div class="delivery-options">
                 <div ng-if="fastestRoute" class="delivery-option" ng-click="selectRoute(fastestRoute)" data-toggle="modal" data-target="#orderModal">
                     <h2>Hurtigste</h2>
-                    <h4 ng-bind="generateRouteList(fastestRoute.RouteInfo.route)"></h4>
+                    <h4 ng-bind="generateRouteList(fastestRoute.Item2.RouteStops)"></h4>
                     <div class="delivery-information">
                         <div>
                             <span><strong>Leveringsdato: </strong></span>
-                            <span ng-bind="getDeliveryDate(queriedDate, fastestRoute.RouteInfo.TotalTime)"></span>
+                            <span ng-bind="getDeliveryDate(queriedDate, fastestRoute.Item2.TotalTime)"></span>
                         </div>
                         <div>
                             <span><strong>Pris: </strong></span>
-                            <span ng-bind="fastestRoute.RouteInfo.TotalCost"></span>
+                            <span ng-bind="fastestRoute.Item2.TotalCost"></span>
                         </div>
                     </div>
                 </div>
                 <div ng-if="cheapestRoute" class="delivery-option" ng-click="selectRoute(cheapestRoute)" data-toggle="modal" data-target="#orderModal">
                     <h2>Billigste</h2>
-                    <h4 ng-bind="generateRouteList(cheapestRoute.RouteInfo.route)"></h4>
+                    <h4 ng-bind="generateRouteList(cheapestRoute.Item2.RouteStops)"></h4>
                     <div class="delivery-information">
                         <div>
                             <span><strong>Leveringsdato: </strong></span>
-                            <span ng-bind="getDeliveryDate(queriedDate, cheapestRoute.RouteInfo.TotalTime)"></span>
+                            <span ng-bind="getDeliveryDate(queriedDate, cheapestRoute.Item2.TotalTime)"></span>
                         </div>
                         <div>
                             <span><strong>Pris: </strong></span>
-                            <span ng-bind="cheapestRoute.RouteInfo.TotalCost"></span>
+                            <span ng-bind="cheapestRoute.Item2.TotalCost"></span>
                         </div>
                     </div>
                 </div>
@@ -72,11 +72,16 @@
         </div>
     </div>
     <div class="row" ng-if="showKvittering && selectedRoute">
-        <h1>Kvittering</h1>
-        <h3 ng-bind="generateRouteList(selectedRoute)"></h3>
-        <div>Leveringsdato: {{getDeliveryDate(queriedDate, selectedRoute.RouteInfo.TotalTime)}}</div>
-        <div>Pris: {{selectedRoute.RouteInfo.TotalCost}}</div>
-        <div>Type: {{selectedCargoType.displayName}}</div>
+        <div class="col-xs-12">
+            <h1>Kvittering</h1>
+            <h3 ng-bind="generateRouteList(selectedRoute.Item2.RouteStops)"></h3>
+            <div>Leveringsdato: {{getDeliveryDate(queriedDate, selectedRoute.Item2.TotalTime)}}</div>
+            <div>Type: {{selectedCargoType.displayName}}</div>
+            <div>Kundenummer: {{orderDetails.customerNo}}</div>
+            <div>Pris: {{selectedRoute.Item2.TotalCost}}</div>
+            <div>Rabat: {{selectedRoute.Item2.TotalCost*orderDetails.discount/100}}</div>
+            <div>Total: {{selectedRoute.Item2.TotalCost-selectedRoute.Item2.TotalCost*orderDetails.discount/100}}</div>
+        </div>
     </div>
     <div class="modal fade" id="orderModal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
@@ -87,30 +92,27 @@
                 </div>
                 <div class="modal-body" ng-if="selectedRoute">
                     <div class="transport-details">
-                        <h3 ng-bind="selectedRoute.RouteTypes === 0 ? 'Billigste' : 'Hurtigste'"></h3>
-                        <h4 ng-bind="generateRouteList(selectedRoute.RouteInfo.route)"></h4>
-                        <div>Leveringsdato: {{getDeliveryDate(queriedDate, selectedRoute.RouteInfo.TotalTime)}}</div>
+                        <h3 ng-bind="selectedRoute.Item1 === 0 ? 'Billigste' : 'Hurtigste'"></h3>
+                        <h4 ng-bind="generateRouteList(selectedRoute.Item2.RouteStops)"></h4>
+                        <div>Leveringsdato: {{getDeliveryDate(queriedDate, selectedRoute.Item2.TotalTime)}}</div>
+                        <div>Pris: {{selectedRoute.Item2.TotalCost}}</div>
                         <div>Type: {{selectedCargoType.displayName}}</div>
-                        <div>Kundenummer: {{customerNo}}</div>
-                        <div>Pris: {{selectedRoute.RouteInfo.TotalCost}}</div>
-                        <div>Rabat: {{selectedRoute.RouteInfo.TotalCost*discount/100}}</div>
-                        <div>Total: {{selectedRoute.RouteInfo.TotalCost-selectedRoute.RouteInfo.TotalCost*discount/100}}</div>
                     </div>
                     <div class="order-details">
                         <div class="form-group">
                             <label for="inputCustomerNo">Kundenummer:</label>
-                            <input type="text" class="form-control" ng-model="customerNo" id="inputCustomerNo"/>
+                            <input type="text" class="form-control" ng-model="orderDetails.customerNo" id="inputCustomerNo"/>
                         </div>
                         <div class="form-group">
                             <label for="inputDiscount">Rabat (%):</label>
-                            <input type="number" ng-model="discount" class="form-control" id="inputDiscount"/>
+                            <input type="number" ng-model="orderDetails.discount" class="form-control" id="inputDiscount"/>
                         </div>
-                        <div>Pris efter rabat: {{selectedRoute.RouteInfo.TotalCost-selectedRoute.RouteInfo.TotalCost*discount/100}}</div>
+                        <div>Pris efter rabat: {{selectedRoute.Item2.TotalCost-selectedRoute.Item2.TotalCost*(orderDetails.discount?orderDetails.discount:0)/100}}</div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">ANNULLER</button>
-                    <button type="button" class="btn btn-primary" ng-click="showKvittering=true" data-dismiss="modal">OPRET</button>
+                    <button type="button" class="btn btn-primary" ng-click="createOrder()" data-dismiss="modal">OPRET</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
